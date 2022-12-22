@@ -275,3 +275,13 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+/* Slides */
+
+table thead th{
+    text-transform: capitalize;
+}
+.table_image{
+    max-width: 200px;
+    height: auto;
+}
