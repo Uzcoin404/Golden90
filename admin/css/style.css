@@ -282,6 +282,6 @@ table thead th{
     text-transform: capitalize;
 }
 .table_image{
-    max-width: 200px;
+    max-width: 300px;
     height: auto;
 }

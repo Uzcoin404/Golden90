@@ -34,7 +34,7 @@ class Database
     }
     public function getSlides()
     {
-        $query = mysqli_query($this->connect(), "SELECT * FROM `slides`");
+        $query = mysqli_query($this->connect(), "SELECT * FROM `slides` ORDER BY `position`");
         if ($query) {
             $result = [];
             while ($products = mysqli_fetch_assoc($query)) {
@@ -43,5 +43,31 @@ class Database
             return $result;
         }
         return null;
+    }
+    public function setSlide($name, $pic, $pic_mob)
+    {
+        $id = uniqid('id');
+        $query = mysqli_query($this->connect(), "INSERT INTO `slides`(`id`, `name`, `picture`, `picture_mobile`) VALUES ('$id', '$name','$pic','$pic_mob')");
+        if ($query) {
+            return true;
+        }
+        return null;
+    }
+
+    public function editSlide($name, $pic, $pic_mob)
+    {
+        $id = uniqid('id');
+        $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob'");
+        if ($query) {
+            return true;
+        }
+        return null;
+    }
+    public function slideUp($pos, $direction)
+    {
+        if ($direction == 'up') {
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE position=$pos");
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE position=$pos");
+        }
     }
 }

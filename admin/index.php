@@ -30,7 +30,7 @@ $isUserAuth = $auth->checkAuth();
                 include_once('./pages/slides-add.php');
             });
             route('/admin/slides/edit', function () {
-                include_once('./pages/slides-delete.php');
+                include_once('./pages/slides-add.php');
             });
             route('/admin/login', function () {
                 include_once('./pages/signin.php');

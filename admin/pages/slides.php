@@ -25,14 +25,14 @@ $slides = $db->getSlides();
                         <tr>
                             <th scope="row"><?= $i + 1 ?></th>
                             <td><?= $slide['name'] ?></td>
-                            <td><img src="<?= $slide['picture'] ?>" alt="" class="table_image"></td>
+                            <td><img src="<?= '../' . $slide['picture'] ?>" alt="" class="table_image"></td>
                             <td>
                                 <button type="button" class="btn btn-square btn-outline-secondary"><i class="fa-solid fa-arrow-up"></i></button>
                                 <button type="button" class="btn btn-square btn-outline-secondary"><i class="fa-solid fa-arrow-down"></i></button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-square btn-success me-2"><i class="fa-solid fa-pen"></i></button>
-                                <button type="button" class="btn btn-square btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                <a href="/admin/slides/add?edit=1" type="button" class="btn btn-square btn-success me-2"><i class="fa-solid fa-pen"></i></a>
+                                <a type="button" class="btn btn-square btn-danger"><i class="fa-solid fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach ?>

@@ -1,21 +1,35 @@
 <?php
 
 $db = new Database();
-$name = $_POST['name'];
-$target_dir = "slides/";
-$target_file = $target_dir . basename($_FILES["picture"]["name"]);
-var_dump($target_file);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
+$destination_path = getcwd() . DIRECTORY_SEPARATOR;
+$slideId = $_GET['u'] ?? null;
+var_dump($slideId);
+
 if (isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["picture"]["tmp_name"]);
+
+    $name = $_POST['name'];
+    $isEdit = $_POST['event_type'];
+    $target_file = basename($_FILES["picture"]["name"]);
+    $target_file_mob = basename($_FILES["picture_mobile"]["name"]);
+
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $imageFileType_mob = strtolower(pathinfo($target_file_mob, PATHINFO_EXTENSION));
+
+    $tmpName = $_FILES["picture"]["tmp_name"];
+    $tmpName_mob = $_FILES["picture_mobile"]["tmp_name"];
+    $check = getimagesize($tmpName) && getimagesize($tmpName_mob);
+
     if ($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
+        $newFilePath = "../img/slides/" . uniqid("slide_", false) . ".$imageFileType";
+        $newFilePath_mob = str_replace('slide_', 'slide_mob_', $newFilePath);
+
+        move_uploaded_file($tmpName, $newFilePath);
+        move_uploaded_file($tmpName_mob, $newFilePath_mob);
+        if ($isEdit == 'add') {
+            $db->setSlide($name, $newFilePath, $newFilePath_mob);
+        } else if ($isEdit == 'edit') {
+            $db->editSlide($name, $newFilePath, $newFilePath_mob);
+        }
     }
 }
 ?>
@@ -23,7 +37,7 @@ if (isset($_POST["submit"])) {
 <div class="container-fluid pt-4 px-4">
     <div class="col-sm-12 col-xl-6">
         <div class="bg-light rounded h-100 p-4">
-            <h6 class="mb-4">Horizontal Form</h6>
+            <h5 class="mb-4"><?= !$slideId ? "Add new Slide" : "Edit Slide" ?></h5>
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="row mb-4">
                     <label for="input1" class="col-sm-2 col-form-label">Name</label>
@@ -31,9 +45,18 @@ if (isset($_POST["submit"])) {
                         <input type="text" class="form-control" id="input1" name="name" required>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label for="formFile" class="form-label">Upload Picture</label>
-                    <input class="form-control" type="file" id="formFile" name="picture" accept="image/png, image/gif, image/jpeg" required>
+                <div class="row mb-4">
+                    <label for="formFile" class="col-sm-3 col-form-label">Upload Picture</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="file" id="formFile" name="picture" accept="image/png, image/gif, image/jpeg" required>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label for="formFile" class="col-sm-3 col-form-label">Upload mobile Picture</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="file" id="formFile" name="picture_mobile" accept="image/png, image/gif, image/jpeg" required>
+                        <input type="hidden" name="event_type" value="<?= !$isEdit ? 'add' : 'edit' ?>">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary" name="submit">Submit</button>
             </form>
