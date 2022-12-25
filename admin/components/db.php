@@ -44,6 +44,14 @@ class Database
         }
         return null;
     }
+    public function getSlide($id)
+    {
+        $query = mysqli_query($this->connect(), "SELECT * FROM `slides` WHERE id='$id' LIMIT 1");
+        if ($query) {
+            return mysqli_fetch_assoc($query);
+        }
+        return null;
+    }
     public function setSlide($name, $pic, $pic_mob)
     {
         $id = uniqid('id');
@@ -53,21 +61,23 @@ class Database
         }
         return null;
     }
-
-    public function editSlide($name, $pic, $pic_mob)
+    public function editSlide($id, $name, $pic, $pic_mob)
     {
-        $id = uniqid('id');
-        $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob'");
+        $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob' WHERE id='$id'");
         if ($query) {
             return true;
         }
         return null;
     }
-    public function slideUp($pos, $direction)
+    public function slideUp($id, $pos, $direction)
     {
+        // $time = time();
         if ($direction == 'up') {
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE position=$pos");
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE position=$pos");
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos WHERE position=$pos-1");
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos-1 WHERE id=$id");
+        } else {
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos WHERE position=$pos+1");
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE id=$id");  
         }
     }
 }

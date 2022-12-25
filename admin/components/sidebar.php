@@ -17,6 +17,7 @@
         <div class="navbar-nav w-100">
             <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a href="/admin/slides" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Slides</a>
+            <a href="/admin/slides" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Languages</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
                 <div class="dropdown-menu bg-transparent border-0">

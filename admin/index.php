@@ -1,9 +1,10 @@
 <?php
 require('./components/db.php');
 require('./components/auth.php');
-include_once('./components/header.php');
+require('./components/header.php');
 
-// require __DIR__ . '/vendor/autoload.php';
+
+require __DIR__ . '/vendor/autoload.php';
 $auth = new Auth();
 $db = new Database();
 $isUserAuth = $auth->checkAuth();
@@ -17,64 +18,30 @@ $isUserAuth = $auth->checkAuth();
 
         <div class="content">
             <?php
-            $routes = [];
             include_once('./components/nav.php');
 
-            route('/admin/', function () {
-                include_once('./old.index.html');
-            });
-            route('/admin/slides', function () {
-                include_once('./pages/slides.php');
-            });
-            route('/admin/slides/add', function () {
-                include_once('./pages/slides-add.php');
-            });
-            route('/admin/slides/edit', function () {
-                include_once('./pages/slides-add.php');
-            });
-            route('/admin/login', function () {
-                include_once('./pages/signin.php');
-            });
-            route('/admin/404', function () {
-                echo "Page not found";
-            });
+            $klein = new \Klein\Klein();
 
-
-            run();
-
-            function route(string $path, callable $callback)
-            {
-                global $routes;
-                $routes[$path] = $callback;
-            }
-            function run()
-            {
-                global $routes, $isUserAuth;
-                $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-                $found = false;
-                foreach ($routes as $path => $callback) {
-                    if ($path !== $uri) continue;
-
-                    if (!$isUserAuth) {
-                        $loginCallback = $routes['/admin/login'];
-                        $loginCallback();
-                        break;
-                    } else {
-                        $callback();
-                    }
-                    $found = true;
-                }
-
-
-                if (!$found) {
-                    $notFoundCallback = $routes['/admin/404'];
-                    $notFoundCallback();
-                }
-            }
+            $klein->with('/admin', function () use ($klein) {
+                $klein->respond('GET', '/', function () {
+                    include_once('old.index.html');
+                });
+                $klein->respond('GET', '/slides', function () {
+                    include_once('pages/slides.php');
+                });
+                $klein->respond('GET', '/slides/[create|edit:action]/[:id]?', function ($request) {
+                    $slideId = $request->id;
+                    include_once('pages/slides-add.php');
+                });
+            });
+            $klein->respond(function () {
+                return 'All the things';
+            });
+            $klein->dispatch();
             ?>
         </div>
 
-        <?php include_once('./components/footer.php'); ?>
+        <?php require('components/footer.php'); ?>
     </div>
 </body>
 

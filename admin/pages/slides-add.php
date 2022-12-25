@@ -1,36 +1,7 @@
 <?php
-
 $db = new Database();
-$destination_path = getcwd() . DIRECTORY_SEPARATOR;
-$slideId = $_GET['u'] ?? null;
-var_dump($slideId);
-
-if (isset($_POST["submit"])) {
-
-    $name = $_POST['name'];
-    $isEdit = $_POST['event_type'];
-    $target_file = basename($_FILES["picture"]["name"]);
-    $target_file_mob = basename($_FILES["picture_mobile"]["name"]);
-
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    $imageFileType_mob = strtolower(pathinfo($target_file_mob, PATHINFO_EXTENSION));
-
-    $tmpName = $_FILES["picture"]["tmp_name"];
-    $tmpName_mob = $_FILES["picture_mobile"]["tmp_name"];
-    $check = getimagesize($tmpName) && getimagesize($tmpName_mob);
-
-    if ($check !== false) {
-        $newFilePath = "../img/slides/" . uniqid("slide_", false) . ".$imageFileType";
-        $newFilePath_mob = str_replace('slide_', 'slide_mob_', $newFilePath);
-
-        move_uploaded_file($tmpName, $newFilePath);
-        move_uploaded_file($tmpName_mob, $newFilePath_mob);
-        if ($isEdit == 'add') {
-            $db->setSlide($name, $newFilePath, $newFilePath_mob);
-        } else if ($isEdit == 'edit') {
-            $db->editSlide($name, $newFilePath, $newFilePath_mob);
-        }
-    }
+if ($slideId) {
+    $slide = $db->getSlide($slideId);
 }
 ?>
 
@@ -38,27 +9,30 @@ if (isset($_POST["submit"])) {
     <div class="col-sm-12 col-xl-6">
         <div class="bg-light rounded h-100 p-4">
             <h5 class="mb-4"><?= !$slideId ? "Add new Slide" : "Edit Slide" ?></h5>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="/admin/components/slide-action.php" method="POST" enctype="multipart/form-data">
                 <div class="row mb-4">
                     <label for="input1" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input1" name="name" required>
+                        <input type="text" class="form-control" id="input1" name="name" required value="<?= !$slideId ? '' : $slide['name'] ?>">
                     </div>
                 </div>
                 <div class="row mb-4">
                     <label for="formFile" class="col-sm-3 col-form-label">Upload Picture</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="file" id="formFile" name="picture" accept="image/png, image/gif, image/jpeg" required>
+                        <input class="form-control" type="file" id="formFile" name="picture" accept="image/png, image/gif, image/jpeg" <?= !$slideId ? 'required' : '' ?>>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <label for="formFile" class="col-sm-3 col-form-label">Upload mobile Picture</label>
                     <div class="col-sm-9">
-                        <input class="form-control" type="file" id="formFile" name="picture_mobile" accept="image/png, image/gif, image/jpeg" required>
-                        <input type="hidden" name="event_type" value="<?= !$isEdit ? 'add' : 'edit' ?>">
+                        <input class="form-control" type="file" id="formFile" name="picture_mobile" accept="image/png, image/gif, image/jpeg" <?= !$slideId ? 'required' : '' ?>>
+                        <input type="hidden" name="event_type" value="<?= !$slideId ? 'add' : 'edit' ?>">
                     </div>
+                    <?php if (isset($slideId)) : ?>
+                        <input type="hidden" name="slide" value='<?= json_encode($slide) ?>'>
+                    <?php endif ?>
                 </div>
-                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                <button type="submit" class="btn btn-primary" name="submit"><?= !$slideId ? 'Submit' : 'Save' ?></button>
             </form>
         </div>
     </div>

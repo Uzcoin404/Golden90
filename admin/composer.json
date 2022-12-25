@@ -13,6 +13,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "monolog/monolog": "1.25.1"
+        "monolog/monolog": "1.25.1",
+        "klein/klein": "^2.1"
     }
 }

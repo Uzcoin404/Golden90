@@ -2,9 +2,12 @@
 include_once('./db.php');
 $db = new Database();
 
-$slidePosition = isset($_GET['slide_pos']);
-$direction = isset($_GET['direction']);
-if ($slidePosition && $direction) {
-    $db->slideUp($slidePosition, $direction);
+$slidePosition = $_GET['p'] ?? null;
+$direction = $_GET['d'] ?? null;
+$id = $_GET['id'] ?? null;
+
+if ($slidePosition && $direction && $id) {
+    $db->slideUp($id, $slidePosition, $direction);
 }
-?>
+header("Location: /admin/slides");
+exit();
