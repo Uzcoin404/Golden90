@@ -39,19 +39,6 @@ a:focus-visible {
     background-color: #0fd300;
 }
 
-.navbar-nav a.login-btn {
-    position: relative;
-}
-
-.navbar-nav a.login-btn img {
-    height: 67px;
-    margin-top: -15px;
-}
-
-.navbar-nav a.login-btn:hover img {
-    background-color: inherit;
-}
-
 .navbar-light .navbar-toggler {
     color: white !important;
     border-color: white;
@@ -179,9 +166,11 @@ a:focus-visible {
     display: flex;
 }
 
+.section.slots a {
+    transition: 0.2s;
+}
 .section.slots a:hover {
     transform: scale(1.2);
-    transition: 0.2s;
 }
 
 .section-cards {
@@ -271,7 +260,6 @@ a:focus-visible {
 
 .language_btn{
     min-width: 90px;
-    height: 50px;
     background-color: transparent;
     /* border-color: #fff; */
     box-shadow: none !important;
@@ -292,6 +280,9 @@ a:focus-visible {
 }
 .language_dropdown_menu .dropdown-item{
     padding: 4px 16px;
+}
+.nav__btn{
+    height: 50px;
 }
 
 @media (min-width: 4000px) {
@@ -386,11 +377,6 @@ a:focus-visible {
 
     .navbar-nav.mr-right .nav-item img {
         height: 40px;
-    }
-
-    .navbar-nav.mr-right .nav-item .login-btn img {
-        height: 53px;
-        margin-top: -12px;
     }
 
     .navigate-link:hover::after {

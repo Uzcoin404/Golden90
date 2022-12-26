@@ -1,5 +1,6 @@
 <?php
 $db = new Database();
+var_dump($postId);
 if ($postId) {
     $post = $db->getPost($postId);
     print_r($post);

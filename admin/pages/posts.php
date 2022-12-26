@@ -11,7 +11,7 @@ $posts = $db->getPosts($langId, true);
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5>Posts <?= strtoupper($langId); ?></h5>
       <a href="/admin/language/create" class="btn btn-primary">Add Language</a>
-      <a href="/admin/language/create" class="btn btn-primary">Add Post</a>
+      <a href="/admin/posts/create" class="btn btn-primary">Add Post</a>
     </div>
     <div class="table-responsive">
       <table class="table table-hover align-middle">

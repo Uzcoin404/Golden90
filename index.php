@@ -72,7 +72,7 @@ $languages = $db->getLanguages();
           <ul class="navbar-nav mr-right align-items-center">
             <li class="nav-item">
               <div class="dropdown">
-                <button class="btn language_btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <button class="btn language_btn btn-secondary dropdown-toggle nav__btn" type="button" data-toggle="dropdown" aria-expanded="false">
                   <img src="img/flags/<?= $lang ?>.svg" alt="" class="">
                   <span><?= $lang ?></span>
                 </button>
@@ -87,7 +87,7 @@ $languages = $db->getLanguages();
               <a class="nav-link login-btn" href="https://182golden90.com/Register"><img src="img/UYEOL.svg" /></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://182golden90.com/Login"><img src="img/girish.svg" /></span></a>
+              <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['text'] ?></a>
             </li>
           </ul>
         </div>
