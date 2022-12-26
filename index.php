@@ -2,7 +2,11 @@
 
 include_once('admin/components/db.php');
 $db = new Database();
+$lang = $_GET['lang'] ?? 'tr';
+
+$posts = $db->getPosts($lang, false);
 $slides = $db->getSlides();
+$languages = $db->getLanguages();
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +24,7 @@ $slides = $db->getSlides();
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/slick/slick.css">
     <link rel="stylesheet" href="plugins/slick/slick-theme.css">
-    <link rel="stylesheet" href="css/site.css?v=4">
+    <link rel="stylesheet" href="css/site.css?time=<?= time() ?>">
 </head>
 
 <body>
@@ -55,9 +59,19 @@ $slides = $db->getSlides();
                             <a class="nav-link" href="https://182golden90.com/Promotions"><img src="img/promo.svg" /></a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mr-right">
+                    <ul class="navbar-nav mr-right align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><img src="img/tr.svg" /></span></a>
+                            <div class="dropdown">
+                                <button class="btn language_btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="img/flags/<?= $lang ?>.svg" alt="" class="">
+                                    <span><?= $lang ?></span>
+                                </button>
+                                <div class="dropdown-menu language_dropdown_menu">
+                                    <?php foreach ($languages as $i => $language) : ?>
+                                        <a class="dropdown-item" href="?lang=<?= $language['keyword'] ?>"><?= $language['name'] ?></a>
+                                    <?php endforeach ?>
+                                </div>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link login-btn" href="https://182golden90.com/Register"><img src="img/UYEOL.svg" /></a>
@@ -83,70 +97,6 @@ $slides = $db->getSlides();
                 </div>
             <?php endforeach ?>
         </div>
-        <!-- <div class="section mainslider">
-            <div>
-                <div class="slide" style="background-image: url('img/slider-6.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-7.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-8.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-9.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-1.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-2.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-4.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-5.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-11.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-12.jpg');"></div>
-            </div>
-        </div>
-        <div class="section mob-mainslider">
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-6.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-7.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-8.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-9.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-1.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-2.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-4.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-5.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-11.jpg');"></div>
-            </div>
-            <div>
-                <div class="slide" style="background-image: url('img/slider-mob-12.jpg');"></div>
-            </div>
-        </div> -->
         <div class="section slider-footer">
             <div class="container-fluid">
                 <div class="">

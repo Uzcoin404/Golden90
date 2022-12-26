@@ -37,8 +37,8 @@ class Database
         $query = mysqli_query($this->connect(), "SELECT * FROM `slides` ORDER BY `position`");
         if ($query) {
             $result = [];
-            while ($products = mysqli_fetch_assoc($query)) {
-                $result[] = $products;
+            while ($slides = mysqli_fetch_assoc($query)) {
+                $result[] = $slides;
             }
             return $result;
         }
@@ -54,8 +54,7 @@ class Database
     }
     public function setSlide($name, $pic, $pic_mob)
     {
-        $id = uniqid('id');
-        $query = mysqli_query($this->connect(), "INSERT INTO `slides`(`id`, `name`, `picture`, `picture_mobile`) VALUES ('$id', '$name','$pic','$pic_mob')");
+        $query = mysqli_query($this->connect(), "INSERT INTO `slides`(`name`, `picture`, `picture_mobile`) VALUES ('$name','$pic','$pic_mob')");
         if ($query) {
             return true;
         }
@@ -69,6 +68,14 @@ class Database
         }
         return null;
     }
+    public function deleteSlide($id)
+    {
+        $query = mysqli_query($this->connect(), "DELETE FROM slides WHERE id='$id'");
+        if ($query) {
+            return true;
+        }
+        return null;
+    }
     public function slideUp($id, $pos, $direction)
     {
         // $time = time();
@@ -77,7 +84,44 @@ class Database
             $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos-1 WHERE id=$id");
         } else {
             $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos WHERE position=$pos+1");
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE id=$id");  
+            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE id=$id");
         }
+    }
+    public function getLanguages()
+    {
+        $query = mysqli_query($this->connect(), "SELECT * FROM `languages`");
+        if ($query) {
+            $result = [];
+            while ($languages = mysqli_fetch_assoc($query)) {
+                $result[] = $languages;
+            }
+            return $result;
+        }
+        return null;
+    }
+    public function getPosts($lang, $indexed)
+    {
+        $query = mysqli_query($this->connect(), "SELECT id,keyword,link,icon,$lang FROM posts");
+        if ($query) {
+            if ($indexed) {
+                $result = [];
+                while ($posts = mysqli_fetch_assoc($query)) {
+                    $result[] = $posts;
+                }
+                return $result;
+            } else {
+                $result = [];
+                while ($posts = mysqli_fetch_assoc($query)) {
+                    $arr = [
+                        'text' => $posts[$lang],
+                        'link' => $posts['link'],
+                        'icon' => $posts['icon']
+                    ];
+                    $result[$posts['keyword']] = $arr;
+                }
+                return $result;
+            }
+        }
+        return null;
     }
 }

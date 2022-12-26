@@ -1,7 +1,7 @@
 <?php
 $db = new Database();
-$slides = $db->getSlides();
-$slidesLength = count($slides) - 1;
+$posts = $db->getPosts($langId, true);
+print_r($posts);
 ?>
 
 <div class="col-12">

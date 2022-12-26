@@ -8,6 +8,7 @@ require __DIR__ . '/vendor/autoload.php';
 $auth = new Auth();
 $db = new Database();
 $isUserAuth = $auth->checkAuth();
+$languages = $db->getLanguages();
 ?>
 
 <body>
@@ -32,6 +33,10 @@ $isUserAuth = $auth->checkAuth();
                 $klein->respond('GET', '/slides/[create|edit:action]/[:id]?', function ($request) {
                     $slideId = $request->id;
                     include_once('pages/slides-add.php');
+                });
+                $klein->respond('GET', '/posts/[:id]', function ($request) {
+                    $langId = $request->id;
+                    include_once('pages/posts.php');
                 });
             });
             $klein->respond(function () {

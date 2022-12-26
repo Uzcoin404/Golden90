@@ -269,6 +269,31 @@ a:focus-visible {
     display: none;
 }
 
+.language_btn{
+    min-width: 90px;
+    height: 50px;
+    background-color: transparent;
+    /* border-color: #fff; */
+    box-shadow: none !important;
+}
+.language_btn span{
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.language_btn::after{
+    margin-left: 0;
+}
+.language_btn img{
+    width: 24px;
+}
+.language_dropdown_menu{
+    min-width: 80px;
+    font-size: 14px;
+}
+.language_dropdown_menu .dropdown-item{
+    padding: 4px 16px;
+}
+
 @media (min-width: 4000px) {
     .slider-footer {
         margin-top: -463px;
