@@ -38,9 +38,11 @@ $languages = $db->getLanguages();
                     $langId = $request->id;
                     include_once('pages/posts.php');
                 });
-            });
-            $klein->respond(function () {
-                return 'All the things';
+                $klein->respond('GET', '/posts/[:id]/[create|edit:action]/[:postId]?', function ($request) {
+                    $langId = $request->id;
+                    $postId = $request->postId;
+                    include_once('pages/posts-control.php');
+                });
             });
             $klein->dispatch();
             ?>

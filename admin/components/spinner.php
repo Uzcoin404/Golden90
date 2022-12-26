@@ -3,3 +3,12 @@
         <span class="sr-only">Loading...</span>
     </div>
 </div>
+
+<script>
+    spinner = document.querySelectorAll('#spinner');
+    window.addEventListener('load', function() {
+        spinner.forEach(spin => {
+            spin.classList.remove('show');
+        });        
+    });
+</script>

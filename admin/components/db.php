@@ -62,7 +62,7 @@ class Database
     }
     public function editSlide($id, $name, $pic, $pic_mob)
     {
-        $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob' WHERE id='$id'");
+        $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob' WHERE id=$id");
         if ($query) {
             return true;
         }
@@ -70,7 +70,7 @@ class Database
     }
     public function deleteSlide($id)
     {
-        $query = mysqli_query($this->connect(), "DELETE FROM slides WHERE id='$id'");
+        $query = mysqli_query($this->connect(), "DELETE FROM slides WHERE id=$id");
         if ($query) {
             return true;
         }
@@ -89,7 +89,7 @@ class Database
     }
     public function getLanguages()
     {
-        $query = mysqli_query($this->connect(), "SELECT * FROM `languages`");
+        $query = mysqli_query($this->connect(), "SELECT * FROM languages");
         if ($query) {
             $result = [];
             while ($languages = mysqli_fetch_assoc($query)) {
@@ -101,26 +101,62 @@ class Database
     }
     public function getPosts($lang, $indexed)
     {
-        $query = mysqli_query($this->connect(), "SELECT id,keyword,link,icon,$lang FROM posts");
+        $query = mysqli_query($this->connect(), "SELECT id,keyword,section,link,icon,$lang FROM posts");
         if ($query) {
             if ($indexed) {
                 $result = [];
+                $nav_link = [];
                 while ($posts = mysqli_fetch_assoc($query)) {
-                    $result[] = $posts;
+                    if ($posts['section'] == 'nav_link') {
+                        $nav_link[] = $posts;
+                    } else {
+                        $result[] = $posts;
+                    }
                 }
+                $result['nav_link'] = $nav_link;
                 return $result;
             } else {
                 $result = [];
+                $nav_link = [];
                 while ($posts = mysqli_fetch_assoc($query)) {
                     $arr = [
                         'text' => $posts[$lang],
                         'link' => $posts['link'],
                         'icon' => $posts['icon']
                     ];
-                    $result[$posts['keyword']] = $arr;
+                    if ($posts['section'] == 'nav_link') {
+                        $nav_link[] = $arr;
+                    } else {
+                        $result[$posts['keyword']] = $arr;
+                    }
                 }
+                $result['nav_link'] = $nav_link;
                 return $result;
             }
+        }
+        return null;
+    }
+    public function getPost($id)
+    {
+        $query = mysqli_query($this->connect(), "SELECT * FROM posts WHERE id='$id' LIMIT 1");
+        if ($query) {
+            return mysqli_fetch_assoc($query);
+        }
+        return null;
+    }
+    public function editPost($id, $lang, $text, $link, $icon)
+    {
+        $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$text', link='$link', icon='$icon' WHERE id=$id");
+        if ($query) {
+            return true;
+        }
+        return null;
+    }
+    public function deletePost($id)
+    {
+        $query = mysqli_query($this->connect(), "DELETE FROM posts WHERE id=$id");
+        if ($query) {
+            return true;
         }
         return null;
     }

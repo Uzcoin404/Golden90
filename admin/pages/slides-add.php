@@ -29,7 +29,7 @@ if ($slideId) {
                         <input type="hidden" name="event_type" value="<?= !$slideId ? 'add' : 'edit' ?>">
                     </div>
                     <?php if (isset($slideId)) : ?>
-                        <input type="hidden" name="slide" value='<?= json_encode($slide) ?>'>
+                        <input type="hidden" name="post" value='<?= json_encode($slide) ?>'>
                     <?php endif ?>
                 </div>
                 <button type="submit" class="btn btn-primary" name="submit"><?= !$slideId ? 'Submit' : 'Save' ?></button>

@@ -1,7 +1,6 @@
 <?php
 include_once('./db.php');
 $db = new Database();
-$destination_path = getcwd() . DIRECTORY_SEPARATOR;
 
 if (isset($_POST["submit"])) {
 

@@ -1,17 +1,6 @@
 (function ($) {
     "use strict";
 
-    // Spinner
-    var spinner = function () {
-        window.addEventListener('load', function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
-            }
-        });
-    };
-    spinner();
-
-
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {
