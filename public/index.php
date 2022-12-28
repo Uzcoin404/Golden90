@@ -24,14 +24,14 @@ $languages = $db->getLanguages();
   <link rel="stylesheet" href="/public/css/bootstrap.min.css">
   <link rel="stylesheet" href="/public/plugins/slick/slick.css">
   <link rel="stylesheet" href="/public/plugins/slick/slick-theme.css">
-  <link rel="stylesheet" href="/public/css/site.css?time=<?= time() ?>">
+  <link rel="stylesheet" href="/public/css/site.css?v=<?= time() ?>">
 </head>
 
 <body>
   <div class="wrapper" id="overview">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><img src="img/logo.png" /></a>
+        <a class="navbar-brand" href="/"><img src="/public/img/logo.png" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,32 +48,32 @@ $languages = $db->getLanguages();
           </ul>
           <!-- <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="https://182golden90.com/Football"><img src="img/spor.svg" /></span></a>
+                            <a class="nav-link" href="https://182golden90.com/Football"><img src="/public/img/spor.svg" /></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Live"><img src="img/canli.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/Live"><img src="/public/img/canli.svg" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Casino/Slots"><img src="img/casino.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/Casino/Slots"><img src="/public/img/casino.svg" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Casino/LiveCasino"><img src="img/canlicasino.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/Casino/LiveCasino"><img src="/public/img/canlicasino.svg" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/VirtualSports"><img src="img/sanalspor.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/VirtualSports"><img src="/public/img/sanalspor.svg" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Betzone"><img src="img/betzone.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/Betzone"><img src="/public/img/betzone.svg" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Promotions"><img src="img/promo.svg" /></a>
+                            <a class="nav-link" href="https://182golden90.com/Promotions"><img src="/public/img/promo.svg" /></a>
                         </li>
                     </ul> -->
           <ul class="navbar-nav mr-right align-items-center">
             <li class="nav-item">
               <div class="dropdown">
                 <button class="btn language_btn btn-secondary dropdown-toggle nav__btn" type="button" data-toggle="dropdown" aria-expanded="false">
-                  <img src="img/flags/<?= $lang ?>.svg" alt="" class="">
+                  <img src="/public/img/flags/<?= $lang ?>.svg" alt="" class="">
                   <span><?= $lang ?></span>
                 </button>
                 <div class="dropdown-menu language_dropdown_menu">
@@ -84,7 +84,7 @@ $languages = $db->getLanguages();
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link login-btn" href="https://182golden90.com/Register"><img src="img/UYEOL.svg" /></a>
+              <a class="nav-link login-btn" href="https://182golden90.com/Register"><img src="/public/img/UYEOL.svg" /></a>
             </li>
             <li class="nav-item">
               <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['text'] ?></a>
@@ -120,17 +120,17 @@ $languages = $db->getLanguages();
             <?php endforeach ?>
           </div>
           <!-- <div class="navigate-slider">
-            <div><a href="https://182golden90.com/Football" class="navigate-link"><img src="img/futbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="img/tenis.png" /></a></div>
-            <div><a href="https://182golden90.com/Handball" class="navigate-link"><img src="img/hantbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Basketball" class="navigate-link"><img src="img/basketbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Volleyball" class="navigate-link"><img src="img/voleybol.png" /></a></div>
-            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="img/masa tenisi.png" /></a></div>
-            <div><a href="https://182golden90.com/American%20Football" class="navigate-link"><img src="img/rugby.png" /></a></div>
-            <div><a href="https://182golden90.com/boxing" class="navigate-link"><img src="img/boks-label.png" /></a></div>
+            <div><a href="https://182golden90.com/Football" class="navigate-link"><img src="/public/img/futbol.png" /></a></div>
+            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="/public/img/tenis.png" /></a></div>
+            <div><a href="https://182golden90.com/Handball" class="navigate-link"><img src="/public/img/hantbol.png" /></a></div>
+            <div><a href="https://182golden90.com/Basketball" class="navigate-link"><img src="/public/img/basketbol.png" /></a></div>
+            <div><a href="https://182golden90.com/Volleyball" class="navigate-link"><img src="/public/img/voleybol.png" /></a></div>
+            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="/public/img/masa tenisi.png" /></a></div>
+            <div><a href="https://182golden90.com/American%20Football" class="navigate-link"><img src="/public/img/rugby.png" /></a></div>
+            <div><a href="https://182golden90.com/boxing" class="navigate-link"><img src="/public/img/boks-label.png" /></a></div>
           </div> -->
           <div class="center-line"></div>
-          <div class="relation-button"><a href="https://182golden90.com"><img src="img/tum_oyunlar.png" /></a>
+          <div class="relation-button"><a href="https://182golden90.com"><img src="/public/img/tum_oyunlar.png" /></a>
           </div>
         </div>
       </div>
@@ -138,32 +138,32 @@ $languages = $db->getLanguages();
     <div class="section slots">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/Slots"><img src="img/slots.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/live/Football"><img src="img/calnibahis.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/LiveCasino"><img src="img/canli casino.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://sports.golden90.link/Football/International/UEFA%20Champions%20League"><img src="img/wc2022.png" /></a></div>
+          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/Slots"><img src="/public/img/slots.png" /></a></div>
+          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/live/Football"><img src="/public/img/calnibahis.png" /></a></div>
+          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/LiveCasino"><img src="/public/img/canli casino.png" /></a></div>
+          <div class="col-md-3 col-sm-6"><a href="https://sports.golden90.link/Football/International/UEFA%20Champions%20League"><img src="/public/img/wc2022.png" /></a></div>
         </div>
       </div>
     </div>
     <div class="section section-cards">
       <div class="container-fluid">
         <div class="text-center pb-3 pt-2 sloter-header">
-          <img src="img/slots-topic.png" />
+          <img src="/public/img/slots-topic.png" />
         </div>
         <div class="">
           <div class="slider-cards">
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="img/sweetbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="img/gates_of_olympus.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="img/seetbonanza2.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="img/sugar_rush.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="img/biggerbass.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="img/gemsbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="img/sweetbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="img/gates_of_olympus.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="img/seetbonanza2.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="img/sugar_rush.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="img/biggerbass.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="img/gemsbonanza.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="/public/img/sweetbonanza.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="/public/img/gates_of_olympus.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="/public/img/seetbonanza2.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="/public/img/sugar_rush.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="/public/img/biggerbass.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="/public/img/gemsbonanza.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="/public/img/sweetbonanza.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="/public/img/gates_of_olympus.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="/public/img/seetbonanza2.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="/public/img/sugar_rush.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="/public/img/biggerbass.png" /></a>
+            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="/public/img/gemsbonanza.png" /></a>
           </div>
         </div>
       </div>
@@ -171,16 +171,16 @@ $languages = $db->getLanguages();
     <div class="section roundcards pt-5">
       <div class="container-fluid pb-5">
         <div class="row">
-          <div class="col w-20 col-sm-6 col-6  text-center"><a href="https://182golden90.com/Casino/Roulette"><img src="img/ROULETTE.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Casino/BlackJack"><img src="img/BLACJJACK.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/VirtualSports"><img src="img/SANARSPOR.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Betzone"><img src="img/BETZONE.png" /></a></div>
-          <div class="col w-20 offset-sm-3 col-sm-6 col-6 offset-3 text-center"><a href="https://182golden90.com/Promotions"><img src="img/PROMO.png" /></a></div>
+          <div class="col w-20 col-sm-6 col-6  text-center"><a href="https://182golden90.com/Casino/Roulette"><img src="/public/img/ROULETTE.png" /></a></div>
+          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Casino/BlackJack"><img src="/public/img/BLACJJACK.png" /></a></div>
+          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/VirtualSports"><img src="/public/img/SANARSPOR.png" /></a></div>
+          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Betzone"><img src="/public/img/BETZONE.png" /></a></div>
+          <div class="col w-20 offset-sm-3 col-sm-6 col-6 offset-3 text-center"><a href="https://182golden90.com/Promotions"><img src="/public/img/PROMO.png" /></a></div>
         </div>
       </div>
     </div>
     <div class="logos container-fluid">
-      <img src="img/logos.jpg" />
+      <img src="/public/img/logos.jpg" />
     </div>
     <div class="section footer py-5">
       <div class="container-fluid">
@@ -251,7 +251,7 @@ $languages = $db->getLanguages();
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6">
-            <img class="pr-3 mob-18" src="img/18.png" /> Kumar bağımlılık yapabilir. Sorumlu Oynayın.
+            <img class="pr-3 mob-18" src="/public/img/18.png" /> Kumar bağımlılık yapabilir. Sorumlu Oynayın.
           </div>
           <div class="col-md-6 text-right pt-4 mob-small-text">
             <a class="text-white" href="https://182golden90.com/page/Anti-Money-Laundering-Policy">Kara Para
@@ -262,7 +262,7 @@ $languages = $db->getLanguages();
       </div>
     </div>
   </div>
-  
+
   <script src="/public/js/jquery.slim.min.js"></script>
   <script src="/public/js/bootstrap.bundle.min.js"></script>
   <script src="/public/plugins/slick/slick.js"></script>

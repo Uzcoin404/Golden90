@@ -7,7 +7,6 @@ $posts = $db->getPosts($langId, true);
   <div class="bg-light rounded h-100 p-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5>Posts <?= strtoupper($langId); ?></h5>
-      <a href="/admin/language/create" class="btn btn-primary">Add Language</a>
       <a href="/admin/posts/<?= $langId ?>/create" class="btn btn-primary">Add Post</a>
     </div>
     <div class="table-responsive">

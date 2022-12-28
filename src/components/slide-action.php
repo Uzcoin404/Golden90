@@ -1,7 +1,6 @@
 <?php
 include_once('./db.php');
 $db = new Database();
-var_dump($_POST);
 if (isset($_POST["submit"])) {
 
     $name = $_POST['name'];
@@ -18,30 +17,35 @@ if (isset($_POST["submit"])) {
     if (!$slide || ($target_file != '' && $target_file_mob != '')) {
         $check = getimagesize($tmpName) && getimagesize($tmpName_mob);
         if ($check !== false) {
-            $newFilePath = "../img/slides/" . uniqid("slide_", false) . ".$imageFileType";
+            $newFilePath = "../../public/img/slides/" . uniqid("slide_", false) . ".$imageFileType";
             $newFilePath_mob = str_replace('slide_', 'slide_mob_', $newFilePath);
+
+            $picUrl = substr($newFilePath, 5, strlen($newFilePath));
+            $picUrl_mob = substr($newFilePath_mob, 5, strlen($newFilePath_mob));
 
             move_uploaded_file($tmpName, $newFilePath);
             move_uploaded_file($tmpName_mob, $newFilePath_mob);
         }
-        if ($action == 'add') {
-            $db->setSlide($name, $newFilePath, $newFilePath_mob);
+        if (!$slide) {
+            $db->setSlide($name, $picUrl, $picUrl_mob);
         } else {
-            $db->editSlide(json_decode($_POST['slide'])->id, $name, $newFilePath, $newFilePath_mob);
+            $db->editSlide($slide->id, $name, $picUrl, $picUrl_mob);
         }
     } else if ($slide) {
         if ($target_file != '' && $target_file_mob == '') {
 
-            $newFilePath = "../img/slides/" . uniqid("slide_", false) . ".$imageFileType";
+            $newFilePath = "../../public/img/slides/" . uniqid("slide_", false) . ".$imageFileType";
+            $picUrl = substr($newFilePath, 5, strlen($newFilePath));
 
             move_uploaded_file($tmpName, $newFilePath);
-            $db->editSlide($slide->id, $name, $newFilePath, $slide->picture_mobile);
+            $db->editSlide($slide->id, $name, $picUrl, $slide->picture_mobile);
         } else if ($target_file == '' && $target_file_mob != '') {
 
-            $newFilePath_mob = "../img/slides/" . uniqid("slide_mob_", false) . ".$imageFileType_mob";
+            $newFilePath_mob = "../../public/img/slides/" . uniqid("slide_mob_", false) . ".$imageFileType_mob";
+            $picUrl = substr($newFilePath_mob, 5, strlen($newFilePath_mob));
 
             move_uploaded_file($tmpName_mob, $newFilePath_mob);
-            $db->editSlide($slide->id, $name, $slide->picture, $newFilePath_mob);
+            $db->editSlide($slide->id, $name, $slide->picture, $picUrl_mob);
         } else {
             $db->editSlide($slide->id, $name, $slide->picture, $slide->picture_mobile);
         }

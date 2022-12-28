@@ -2,7 +2,6 @@
 $db = new Database();
 if ($postId) {
     $post = $db->getPost($postId);
-    print_r($post);
 }
 ?>
 

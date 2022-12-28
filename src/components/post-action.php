@@ -14,24 +14,21 @@ if (isset($_POST["submit"]) && $langId) {
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
     $tmpName = $_FILES["icon"]["tmp_name"];
+    $newFilePath = "../../public/img/icons/" . uniqid("icon_", false) . ".$imageFileType";
+    $iconUrl = substr($newFilePath, 5, strlen($newFilePath));
     if ($post) {
         if ($target_file != '') {
-
-            $newFilePath = "../img/icons/" . uniqid("icon_", false) . ".$imageFileType";
-
             move_uploaded_file($tmpName, $newFilePath);
-            $db->editPost($post->id, $langId, $text, $link, $newFilePath);
+            $db->editPost($post->id, $langId, $text, $link, $iconUrl);
         } else {
-            var_dump($post->id, $langId, $text, $link, $post->icon);
-            var_dump($db->editPost($post->id, $langId, $text, $link, $post->icon));
+            $db->editPost($post->id, $langId, $text, $link, $post->icon);
         }
     } else {
         $check = getimagesize($tmpName);
         if ($check !== false && $target_file != '') {
-            $newFilePath = "../img/icons/" . uniqid("icon_", false) . ".$imageFileType";
 
             move_uploaded_file($tmpName, $newFilePath);
-            $db->setPost($section, $langId, $text, $link, $newFilePath);    
+            $db->setPost($section, $langId, $text, $link, $iconUrl);
         }
     }
 }

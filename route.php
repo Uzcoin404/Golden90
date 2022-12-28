@@ -26,6 +26,15 @@ Router::group(['prefix' => '/admin'], function () {
     Router::get('/posts/{lang}/edit/{id}', function ($langId, $postId) {
         include_once('src/pages/posts-control.php');
     });
+    Router::get('/languages', function () {
+        include_once('src/pages/languages.php');
+    });
+    Router::get('/language/create', function () {
+        include_once('src/pages/language-control.php');
+    });
+    Router::get('/language/edit/{lang}', function ($id) {
+        include_once('src/pages/language-control.php');
+    });
 });
 
 Router::get('/404', function () {

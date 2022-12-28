@@ -54,14 +54,25 @@ class Database
     }
     public function setSlide($name, $pic, $pic_mob)
     {
-        $query = mysqli_query($this->connect(), "INSERT INTO `slides`(`name`, `picture`, `picture_mobile`) VALUES ('$name','$pic','$pic_mob')");
-        if ($query) {
+        $name = mysqli_real_escape_string($this->connect(), $name);
+        $pic = mysqli_real_escape_string($this->connect(), $pic);
+        $pic_mob = mysqli_real_escape_string($this->connect(), $pic_mob);
+        
+        $rows = mysqli_query($this->connect(), "SELECT COUNT(*) FROM slides");
+        $rowCount = mysqli_fetch_assoc($rows)['COUNT(*)'] + 1;
+
+        $query = mysqli_query($this->connect(), "INSERT INTO slides(name, picture, picture_mobile, position) VALUES ('$name','$pic','$pic_mob', '$rowCount')");
+        if ($rows && $query) {
             return true;
         }
         return null;
     }
     public function editSlide($id, $name, $pic, $pic_mob)
     {
+        $name = mysqli_real_escape_string($this->connect(), $name);
+        $pic = mysqli_real_escape_string($this->connect(), $pic);
+        $pic_mob = mysqli_real_escape_string($this->connect(), $pic_mob);
+
         $query = mysqli_query($this->connect(), "UPDATE `slides` SET name='$name', picture='$pic', picture_mobile='$pic_mob' WHERE id=$id");
         if ($query) {
             return true;
@@ -151,6 +162,11 @@ class Database
     }
     public function editPost($id, $lang, $text, $link, $icon)
     {
+        $lang = mysqli_real_escape_string($this->connect(), $lang);
+        $text = mysqli_real_escape_string($this->connect(), $text);
+        $link = mysqli_real_escape_string($this->connect(), $link);
+        $icon = mysqli_real_escape_string($this->connect(), $icon);
+
         $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$text', link='$link', icon='$icon' WHERE id=$id");
         if ($query) {
             return true;
@@ -167,10 +183,49 @@ class Database
     }
     public function setPost($section, $lang, $text, $link, $icon)
     {
+        $lang = mysqli_real_escape_string($this->connect(), $lang);
+        $text = mysqli_real_escape_string($this->connect(), $text);
+        $link = mysqli_real_escape_string($this->connect(), $link);
+        $icon = mysqli_real_escape_string($this->connect(), $icon);
+        
         $keyword = uniqid();
         $query = mysqli_query($this->connect(), "INSERT INTO posts(keyword,section,link,icon,$lang) VALUES ('$keyword', '$section', '$link', '$icon', '$text')");
         if ($query) {
             return true;
+        }
+        return null;
+    }
+    public function setLanguage($name, $keyword, $icon)
+    {
+        $name = mysqli_real_escape_string($this->connect(), $name);
+        $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
+        $icon = mysqli_real_escape_string($this->connect(), $icon);
+
+        $query = mysqli_query($this->connect(), "INSERT INTO languages(keyword, name, icon) VALUES ('$keyword','$name','$icon')");
+        $query2 = mysqli_query($this->connect(), "ALTER TABLE posts ADD $keyword TEXT NOT NULL");
+        if ($query && $query2) {
+            return true;
+        }
+        return null;
+    }
+    public function editLanguage($id, $oldLang, $name, $keyword, $icon)
+    {
+        $name = mysqli_real_escape_string($this->connect(), $name);
+        $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
+        $icon = mysqli_real_escape_string($this->connect(), $icon);
+
+        $query = mysqli_query($this->connect(), "UPDATE languages name='$name', keyword='$keyword', icon='$icon' WHERE id=$id");
+        $query2 = mysqli_query($this->connect(), "ALTER TABLE posts CHANGE $oldLang $keyword TEXT NOT NULL");
+        if ($query && $query2) {
+            return true;
+        }
+        return null;
+    }
+    public function getLanguage($id)
+    {
+        $query = mysqli_query($this->connect(), "SELECT * FROM languages WHERE id=$id LIMIT 1");
+        if ($query) {
+            return mysqli_fetch_assoc($query);
         }
         return null;
     }
