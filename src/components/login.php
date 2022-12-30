@@ -8,9 +8,10 @@ $password = $_POST['password'];
 
 if ($db->getUser($email, $password)) {
     setcookie('email', $email, time() + 3600 * 24 * 30, '/');
-    header("Location: /admin/");
+    header("Location: /admin");
     exit();
 } else {
-    header("Location: /admin/login?err=1");
+    header("Location: /admin/?err=1");
+    exit();
 }
 ob_end_flush();

@@ -1,7 +1,7 @@
 <?php
 class Database
 {
-    private $hostname = '127.0.0.1';
+    private $hostname = '';
     private $username = 'root';
     private $password = '';
     private $database = 'golden90';
@@ -17,12 +17,12 @@ class Database
         return $mysqli;
     }
 
-    public function getUser($email, $password)
+    public function getUser($email, $password = null)
     {
-        $email = mysqli_real_escape_string($this->connect(), $email);
-        $password = mysqli_real_escape_string($this->connect(), $password);
-
+        $email = mysqli_real_escape_string($this->connect(), htmlspecialchars($email));
+        
         if (!$password) {
+            $password = mysqli_real_escape_string($this->connect(), htmlspecialchars($password));
             $query = mysqli_query($this->connect(), "SELECT * FROM `users` WHERE `email`='$email' LIMIT 1");
         } else {
             $query = mysqli_query($this->connect(), "SELECT * FROM `users` WHERE `email`='$email' AND `password`='$password' LIMIT 1");
@@ -213,13 +213,23 @@ class Database
         $name = mysqli_real_escape_string($this->connect(), $name);
         $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
         $icon = mysqli_real_escape_string($this->connect(), $icon);
-
-        $query = mysqli_query($this->connect(), "UPDATE languages name='$name', keyword='$keyword', icon='$icon' WHERE id=$id");
-        $query2 = mysqli_query($this->connect(), "ALTER TABLE posts CHANGE $oldLang $keyword TEXT NOT NULL");
-        if ($query && $query2) {
-            return true;
+        
+        if ($oldLang) {
+            $query2 = mysqli_query($this->connect(), "ALTER TABLE posts CHANGE $oldLang $keyword TEXT NOT NULL");
+            if (!$query2) {
+                return false;
+            }
         }
-        return null;
+        mysqli_query($this->connect(), "UPDATE languages SET name='$name', keyword='$keyword', icon='$icon' WHERE id=$id");
+    }
+    public function deleteLanguage($keyword)
+    {
+        $query = mysqli_query($this->connect(), "ALTER TABLE posts DROP $keyword");
+        if (!$query) {
+            return false;
+        } else {
+            mysqli_query($this->connect(), "DELETE FROM languages WHERE keyword='$keyword'");
+        }
     }
     public function getLanguage($id)
     {

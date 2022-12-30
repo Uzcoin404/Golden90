@@ -33,7 +33,7 @@ $languages = $db->getLanguages();
                                 <a href="/admin/language/edit/<?= $language['id'] ?>" type="button" class="btn btn-square btn-success me-2">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
-                                <a href="/src/components/slide-delete.php?id=<?= $language['id'] ?>" type="button" class="btn btn-square btn-danger">
+                                <a href="/src/components/language-delete.php?id=<?= $language['keyword'] ?>" type="button" class="btn btn-square btn-danger">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>

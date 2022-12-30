@@ -15,11 +15,12 @@ if (isset($_POST["submit"])) {
     $newFilePath = "../../public/img/flags/" . uniqid("flag_", false) . ".$imageFileType";
     $iconUrl = substr($newFilePath, 5, strlen($newFilePath));
     if ($language) {
+        $editColumn = $language->keyword == $keyword ? null : $language->keyword;
         if ($target_file != '') {
             move_uploaded_file($tmpName, $newFilePath);
-            $db->editLanguage($language->id, $language->keyword, $name, $keyword, $iconUrl);
+            $db->editLanguage($language->id, $editColumn, $name, $keyword, $iconUrl);
         } else {
-            $db->editLanguage($language->id, $language->keyword, $name, $keyword, $language->icon);
+            $db->editLanguage($language->id, $editColumn, $name, $keyword, $language->icon);
         }
     } else {
         $check = getimagesize($tmpName);
@@ -30,5 +31,10 @@ if (isset($_POST["submit"])) {
         }
     }
 }
-var_dump($keyword);
-// header("Location: /admin/posts/$langId");
+if ($keyword) {
+    header("Location: /admin/posts/$keyword");
+    exit;
+} else {
+    header("Location: /admin/languages");
+    exit;
+}

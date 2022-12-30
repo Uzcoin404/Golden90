@@ -27,7 +27,7 @@ $posts = $db->getPosts($langId, true);
                 <th scope="row"><?= 1 ?></th>
                 <td><?= $post[$langId] ?></td>
                 <td><?= $post['link'] ?></td>
-                <td><img src="<?= '../' . $post['icon'] ?>" alt="" class="table_image"></td>
+                <td><img src="<?= $post['icon'] ?>" alt="" class="table_image"></td>
                 <td>
                   <a href="/admin/posts/<?= $langId . "/edit/" . $post['id'] ?>" type="button" class="btn btn-square btn-success me-2"><i class="fa-solid fa-pen"></i></a>
                 </td>
@@ -49,7 +49,7 @@ $posts = $db->getPosts($langId, true);
                       <th scope="row"><?= 1 ?></th>
                       <td><?= $section[$langId] ?></td>
                       <td><?= $section['link'] ?></td>
-                      <td><img src="<?= '../' . $section['icon'] ?>" alt="" class="table_image"></td>
+                      <td><img src="<?= $section['icon'] ?>" alt="" class="table_image_sm"></td>
                       <td>
                         <a href="/admin/posts/<?= $langId . "/edit/" . $section['id'] ?>" type="button" class="btn btn-square btn-success me-2"><i class="fa-solid fa-pen"></i></a>
                         <a href="/src/components/post-delete.php?id=<?= $section['id'] . "&lang=$langId" ?>" type="button" class="btn btn-square btn-danger"><i class="fa-solid fa-trash"></i></a>

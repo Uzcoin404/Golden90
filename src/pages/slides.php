@@ -26,9 +26,9 @@ $slidesLength = count($slides) - 1;
                     <?php foreach ($slides as $i => $slide) : ?>
                         <tr>
                             <th scope="row"><?= $i + 1 ?></th>
-                            <td><?= $slide['name'] ?></td>
-                            <td><img src="<?= '../' . $slide['picture'] ?>" alt="" class="table_image"></td>
-                            <td><img src="<?= '../' . $slide['picture_mobile'] ?>" alt="" class="table_image"></td>
+                            <td><?= $slide['name'] ?? null ?></td>
+                            <td><img src="<?= $slide['picture'] ?>" alt="" class="table_image"></td>
+                            <td><img src="<?= $slide['picture_mobile'] ?>" alt="" class="table_image"></td>
                             <td>
                                 <?php if ($i != 0) : ?>
                                     <a href="/src/components/slide-position.php?d=up&p=<?= $i + 1 . "&id=" . $slide['id'] ?>" type="button" class="btn btn-square btn-outline-secondary"><i class="fa-solid fa-arrow-up"></i></a>

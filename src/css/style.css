@@ -283,7 +283,10 @@ table thead th{
 }
 .table_image{
     max-width: 300px;
-    height: auto;
+    max-height: 300px;
+}
+.table_image_sm{
+    max-width: 150px;
 }
 
 .flag__icon{

@@ -5,16 +5,21 @@ if ($adminUrl != '/admin') {
     require('public/index.php');
     exit();
 }
+require('src/components/auth.php');
+$auth = new Auth();
+$isUserAuth = $auth->checkAuth();
+
+if (!$isUserAuth) {
+    require('src/components/header.php');
+    require('src/pages/signin.php');
+    exit();
+}
 
 require('src/components/db.php');
-require('src/components/auth.php');
-require __DIR__ . '/vendor/autoload.php';
-
-$auth = new Auth();
 $db = new Database();
-$isUserAuth = $auth->checkAuth();
-$languages = $db->getLanguages();
+$user = $db->getUser($_COOKIE['email']);
 
+require __DIR__ . '/vendor/autoload.php';
 require('src/components/header.php');
 include_once('src/components/spinner.php');
 ?>

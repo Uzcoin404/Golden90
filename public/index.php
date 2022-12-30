@@ -30,8 +30,10 @@ $languages = $db->getLanguages();
 <body>
   <div class="wrapper" id="overview">
     <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/"><img src="/public/img/logo.png" /></a>
+      <nav class="navbar navbar-expand-xl navbar-light">
+        <a class="navbar-brand" href="<?= $posts['logo']['link'] ?>">
+          <img src="<?= $posts['logo']['icon'] ?>" alt="" />
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,50 +48,24 @@ $languages = $db->getLanguages();
               </li>
             <?php endforeach ?>
           </ul>
-          <!-- <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="https://182golden90.com/Football"><img src="/public/img/spor.svg" /></span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Live"><img src="/public/img/canli.svg" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Casino/Slots"><img src="/public/img/casino.svg" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Casino/LiveCasino"><img src="/public/img/canlicasino.svg" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/VirtualSports"><img src="/public/img/sanalspor.svg" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Betzone"><img src="/public/img/betzone.svg" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://182golden90.com/Promotions"><img src="/public/img/promo.svg" /></a>
-                        </li>
-                    </ul> -->
-          <ul class="navbar-nav mr-right align-items-center">
-            <li class="nav-item">
-              <div class="dropdown">
-                <button class="btn language_btn btn-secondary dropdown-toggle nav__btn" type="button" data-toggle="dropdown" aria-expanded="false">
-                  <img src="/public/img/flags/<?= $lang ?>.svg" alt="" class="">
-                  <span><?= $lang ?></span>
-                </button>
-                <div class="dropdown-menu language_dropdown_menu">
-                  <?php foreach ($languages as $i => $language) : ?>
-                    <a class="dropdown-item" href="?lang=<?= $language['keyword'] ?>"><?= $language['name'] ?></a>
-                  <?php endforeach ?>
-                </div>
+          <div class="row flex-nowrap">
+            <div class="dropdown">
+              <button class="btn language_btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <img src="/public/img/flags/<?= $lang ?>.svg" alt="" class="">
+                <span><?= $lang ?></span>
+              </button>
+              <div class="dropdown-menu language_dropdown_menu">
+                <?php foreach ($languages as $i => $language) : ?>
+                  <a class="dropdown-item" href="?lang=<?= $language['keyword'] ?>"><?= $language['name'] ?></a>
+                <?php endforeach ?>
               </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link login-btn" href="https://182golden90.com/Register"><img src="/public/img/UYEOL.svg" /></a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['text'] ?></a>
-            </li>
-          </ul>
+            </div>
+            <a class="btn nav__btn reg__btn text-center" href="<?= $posts['sign_up']['link'] ?>">
+              <?= $posts['sign_up']['text'] ?>
+            </a>
+            <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['text'] ?></a>
+            </ul>
+          </div>
         </div>
       </nav>
     </div>
@@ -119,16 +95,6 @@ $languages = $db->getLanguages();
               </div>
             <?php endforeach ?>
           </div>
-          <!-- <div class="navigate-slider">
-            <div><a href="https://182golden90.com/Football" class="navigate-link"><img src="/public/img/futbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="/public/img/tenis.png" /></a></div>
-            <div><a href="https://182golden90.com/Handball" class="navigate-link"><img src="/public/img/hantbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Basketball" class="navigate-link"><img src="/public/img/basketbol.png" /></a></div>
-            <div><a href="https://182golden90.com/Volleyball" class="navigate-link"><img src="/public/img/voleybol.png" /></a></div>
-            <div><a href="https://182golden90.com/Tennis" class="navigate-link"><img src="/public/img/masa tenisi.png" /></a></div>
-            <div><a href="https://182golden90.com/American%20Football" class="navigate-link"><img src="/public/img/rugby.png" /></a></div>
-            <div><a href="https://182golden90.com/boxing" class="navigate-link"><img src="/public/img/boks-label.png" /></a></div>
-          </div> -->
           <div class="center-line"></div>
           <div class="relation-button"><a href="https://182golden90.com"><img src="/public/img/tum_oyunlar.png" /></a>
           </div>
@@ -267,12 +233,12 @@ $languages = $db->getLanguages();
   <script src="/public/js/bootstrap.bundle.min.js"></script>
   <script src="/public/plugins/slick/slick.js"></script>
   <script type="text/javascript">
-    $(function() {
-      $('a[href]').each(function() {
-        let url = $(this).attr('href');
-        $(this).attr('href', url.replace('https://182golden90.com', 'https://sports.' + window.location.host).replace('www.', ''));
-      })
-    })
+    // $(function() {
+    //   $('a[href]').each(function() {
+    //     let url = $(this).attr('href');
+    //     $(this).attr('href', url.replace('https://182golden90.com', 'https://sports.' + window.location.host).replace('www.', ''));
+    //   })
+    // })
     $('.mob-mainslider').slick({
       arrows: false,
       dots: false,
