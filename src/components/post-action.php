@@ -32,4 +32,4 @@ if (isset($_POST["submit"]) && $langId) {
         }
     }
 }
-header("Location: /admin/posts/$langId");
+header("Location: /admin/items/$langId");

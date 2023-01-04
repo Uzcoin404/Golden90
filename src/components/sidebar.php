@@ -26,7 +26,7 @@ $languages = $db->getLanguages();
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Posts</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <?php foreach ($languages as $i => $language) : ?>
-                        <a href="/admin/posts/<?= $language['keyword'] ?>" class="dropdown-item <?= $language['keyword'] == $langId ? 'active' : '' ?>">
+                        <a href="/admin/sections/<?= $language['keyword'] ?>" class="dropdown-item <?= $language['keyword'] == $langId ? 'active' : '' ?>">
                             <img src="<?= $language['icon'] ?>" alt="" class="flag__icon">
                             <?= $language['name'] ?>
                         </a>

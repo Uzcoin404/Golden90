@@ -4,9 +4,13 @@ require('src/components/db.php');
 $db = new Database();
 $lang = $_GET['lang'] ?? 'tr';
 
-$posts = $db->getPosts($lang, false);
+$posts = $db->getPosts($lang);
 $slides = $db->getSlides();
 $languages = $db->getLanguages();
+// echo "<br>";
+// print_r($posts);
+// echo "</br>";
+
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +35,7 @@ $languages = $db->getLanguages();
   <div class="wrapper" id="overview">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-xl navbar-light">
-        <a class="navbar-brand" href="<?= $posts['logo']['link'] ?>">
+        <a class="navbar-brand" href="<?= $posts['logo']['icon'] ?>">
           <img src="<?= $posts['logo']['icon'] ?>" alt="" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,12 +47,12 @@ $languages = $db->getLanguages();
               <li class="nav-item">
                 <a class="nav-link" href="<?= $nav_link['link'] ?>">
                   <img src="<?= $nav_link['icon'] ?>" />
-                  <span><?= $nav_link['text'] ?></span>
+                  <?= $nav_link['html'] ?>
                 </a>
               </li>
             <?php endforeach ?>
           </ul>
-          <div class="row flex-nowrap">
+          <div class="row nav__actions flex-nowrap mt-4 mt-xl-0">
             <div class="dropdown">
               <button class="btn language_btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                 <img src="/public/img/flags/<?= $lang ?>.svg" alt="" class="">
@@ -56,14 +60,17 @@ $languages = $db->getLanguages();
               </button>
               <div class="dropdown-menu language_dropdown_menu">
                 <?php foreach ($languages as $i => $language) : ?>
-                  <a class="dropdown-item" href="?lang=<?= $language['keyword'] ?>"><?= $language['name'] ?></a>
+                  <a href="?lang=<?= $language['keyword'] ?>" class="dropdown-item">
+                    <img src="<?= $language['icon'] ?>" alt="" class="flag__icon">
+                    <?= $language['name'] ?>
+                  </a>
                 <?php endforeach ?>
               </div>
             </div>
             <a class="btn nav__btn reg__btn text-center" href="<?= $posts['sign_up']['link'] ?>">
-              <?= $posts['sign_up']['text'] ?>
+              <?= $posts['sign_up']['html'] ?>
             </a>
-            <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['text'] ?></a>
+            <a href="<?= $posts['login']['link'] ?>" class="btn btn-secondary nav__btn"><?= $posts['login']['html'] ?></a>
             </ul>
           </div>
         </div>
@@ -85,12 +92,12 @@ $languages = $db->getLanguages();
     </div>
     <div class="section slider-footer">
       <div class="container-fluid">
-        <div class="">
+        <div>
           <div class="navigate-slider">
             <?php foreach ($posts['sport'] as $sport) : ?>
               <div>
                 <a href="<?= $sport['link'] ?>" class="navigate-link">
-                  <img src="<?= $sport['icon'] ?>" />
+                  <img src="<?= $sport['icon'] ?>" alt="" />
                 </a>
               </div>
             <?php endforeach ?>
@@ -104,10 +111,11 @@ $languages = $db->getLanguages();
     <div class="section slots">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/Slots"><img src="/public/img/slots.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/live/Football"><img src="/public/img/calnibahis.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://182golden90.com/Casino/LiveCasino"><img src="/public/img/canli casino.png" /></a></div>
-          <div class="col-md-3 col-sm-6"><a href="https://sports.golden90.link/Football/International/UEFA%20Champions%20League"><img src="/public/img/wc2022.png" /></a></div>
+          <?php foreach ($posts['cards_1'] as $card) : ?>
+            <div class="col-md-3 col-sm-6">
+              <a href="<?= $card['link'] ?>"><img src="<?= $card['icon'] ?>" /></a>
+            </div>
+          <?php endforeach ?>
         </div>
       </div>
     </div>
@@ -118,18 +126,9 @@ $languages = $db->getLanguages();
         </div>
         <div class="">
           <div class="slider-cards">
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="/public/img/sweetbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="/public/img/gates_of_olympus.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="/public/img/seetbonanza2.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="/public/img/sugar_rush.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="/public/img/biggerbass.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="/public/img/gemsbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20sbxmas/Sweet%20Bonanza%20Xmas" class="card-item"><img src="/public/img/sweetbonanza.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20olympgate/Gates%20of%20Olympus" class="card-item"><img src="/public/img/gates_of_olympus.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20fruitsw/Sweet%20Bonanza" class="card-item"><img src="/public/img/seetbonanza2.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20cm/Sugar%20Rush" class="card-item"><img src="/public/img/sugar_rush.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs12bbb/Bigger%20Bass%20Bonanza" class="card-item"><img src="/public/img/biggerbass.png" /></a>
-            <a href="https://182golden90.com/Casino/slots/pragmaticplay/pragmaticplay/vs20goldfever/Gems%20Bonanza" class="card-item"><img src="/public/img/gemsbonanza.png" /></a>
+            <?php foreach ($posts['popular_slots'] as $card) : ?>
+              <a href="<?= $card['link'] ?>" class="card-item"><img src="<?= $card['icon'] ?>" /></a>
+            <?php endforeach ?>
           </div>
         </div>
       </div>
@@ -137,16 +136,16 @@ $languages = $db->getLanguages();
     <div class="section roundcards pt-5">
       <div class="container-fluid pb-5">
         <div class="row">
-          <div class="col w-20 col-sm-6 col-6  text-center"><a href="https://182golden90.com/Casino/Roulette"><img src="/public/img/ROULETTE.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Casino/BlackJack"><img src="/public/img/BLACJJACK.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/VirtualSports"><img src="/public/img/SANARSPOR.png" /></a></div>
-          <div class="col w-20 col-sm-6 col-6 text-center"><a href="https://182golden90.com/Betzone"><img src="/public/img/BETZONE.png" /></a></div>
-          <div class="col w-20 offset-sm-3 col-sm-6 col-6 offset-3 text-center"><a href="https://182golden90.com/Promotions"><img src="/public/img/PROMO.png" /></a></div>
+          <?php foreach ($posts['cards_2'] as $card) : ?>
+            <div class="col w-20 col-sm-6 col-6  text-center">
+              <a href="<?= $card['link'] ?>"><img src="<?= $card['icon'] ?>" /></a>
+            </div>
+          <?php endforeach ?>
         </div>
       </div>
     </div>
     <div class="logos container-fluid">
-      <img src="/public/img/logos.jpg" />
+      <img src="<?= $posts['footer_logos']['icon'] ?>" alt="" />
     </div>
     <div class="section footer py-5">
       <div class="container-fluid">
@@ -216,13 +215,13 @@ $languages = $db->getLanguages();
     <div class="section copyright py-3">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-6">
-            <img class="pr-3 mob-18" src="/public/img/18.png" /> Kumar bağımlılık yapabilir. Sorumlu Oynayın.
+          <div class="col-md-6 d-flex align-items-center">
+            <img class="pr-3 mob-18" src="<?= $posts['18_img']['icon'] ?>" />
+            <?= $posts['copyright_text1']['html'] ?>
           </div>
           <div class="col-md-6 text-right pt-4 mob-small-text">
-            <a class="text-white" href="https://182golden90.com/page/Anti-Money-Laundering-Policy">Kara Para
-              Aklamayı Önleme Politikası</a> | <a class="text-white" href="https://182golden90.com/page/Know-Your-Customer-Policy">Müşteri Politikanızı
-              Bilin.</a>
+            <a class="text-white" href="<?= $posts['copyright_text2']['link'] ?>"><?= $posts['copyright_text2']['html'] ?></a>
+            | <a class="text-white" href="<?= $posts['copyright_text3']['link'] ?>"><?= $posts['copyright_text3']['html'] ?></a>
           </div>
         </div>
       </div>
@@ -232,109 +231,7 @@ $languages = $db->getLanguages();
   <script src="/public/js/jquery.slim.min.js"></script>
   <script src="/public/js/bootstrap.bundle.min.js"></script>
   <script src="/public/plugins/slick/slick.js"></script>
-  <script type="text/javascript">
-    // $(function() {
-    //   $('a[href]').each(function() {
-    //     let url = $(this).attr('href');
-    //     $(this).attr('href', url.replace('https://182golden90.com', 'https://sports.' + window.location.host).replace('www.', ''));
-    //   })
-    // })
-    $('.mob-mainslider').slick({
-      arrows: false,
-      dots: false,
-      speed: 300,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000
-    });
-
-    $('.mainslider').slick({
-      autoplay: true,
-      autoplaySpeed: 2000
-    });
-    $('.navigate-slider').slick({
-      dots: false,
-      arrows: false,
-      speed: 300,
-      slidesToShow: 8,
-      slidesToScroll: 1,
-      responsive: [{
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
-      ]
-    });
-
-    $('.slider-cards').slick({
-      dots: false,
-      arrows: true,
-      speed: 300,
-      slidesToShow: 6,
-      slidesToScroll: 1,
-      responsive: [{
-          breakpoint: 991,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            infinite: true,
-            dots: false,
-            arrows: false,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        },
-        {
-          breakpoint: 767,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            arrows: false,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        },
-        {
-          breakpoint: 479,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            centerMode: true,
-            centerPadding: '60px',
-          }
-        }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
-      ]
-    });
-  </script>
+  <script src="/public/js/script.js"></script>
 </body>
 
 </html>

@@ -5,7 +5,9 @@ body {
     font-weight: 400;
     font-size: 12px;
 }
-
+p{
+    margin-bottom: 0;
+}
 img {
     max-width: 100%;
 }
@@ -25,6 +27,9 @@ a:focus-visible {
     top: -5px;
 }
 
+.navbar{
+    padding-top: 16px;
+}
 .navbar-nav {
     gap: 16px;
 }
@@ -37,9 +42,6 @@ a:focus-visible {
     padding: 0 16px !important;
     color: #fff !important;
     text-transform: uppercase;
-}
-
-.navbar-nav.mr-auto .nav-link {
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 3px;
 }
@@ -67,7 +69,7 @@ a:focus-visible {
 }
 
 .slider-footer {
-    background: url("/img/globus.png") no-repeat;
+    background: url("../img/globus.png") no-repeat;
     width: 100%;
     height: 28vw;
     background-size: cover;
@@ -97,7 +99,7 @@ a:focus-visible {
 .navigate-link:hover::after {
     content: "";
     display: block;
-    background: url("/img/frame.png");
+    background: url("../img/frame.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center bottom;
@@ -125,7 +127,7 @@ a:focus-visible {
 .center-line {
     width: 100%;
     margin: -7vw 0 -15px;
-    background: url("/img/centerline.png") repeat center 25px;
+    background: url("../img/centerline.png") repeat center 25px;
     height: 18px;
     position: relative;
     z-index: 1;
@@ -136,7 +138,7 @@ a:focus-visible {
     height: 50px;
     width: 70px;
     content: "";
-    background: url("/img/leftball.png") no-repeat center center;
+    background: url("../img/leftball.png") no-repeat center center;
     position: absolute;
     left: 0;
     top: -16px;
@@ -148,7 +150,7 @@ a:focus-visible {
     height: 50px;
     width: 70px;
     content: "";
-    background: url("/img/rightball.png") no-repeat center center;
+    background: url("../img/rightball.png") no-repeat center center;
     position: absolute;
     right: 0;
     top: -16px;
@@ -191,7 +193,7 @@ a:focus-visible {
 }
 
 .section-cards {
-    background: url("/img/section-slots.png");
+    background: url("../img/section-slots.png");
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -204,7 +206,7 @@ a:focus-visible {
 }
 
 .roundcards {
-    background-image: url("/img/bg2.png");
+    background-image: url("../img/bg2.png");
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: cover;
@@ -293,7 +295,8 @@ a:focus-visible {
     width: 24px;
 }
 .language_dropdown_menu {
-    min-width: 80px;
+    min-width: 100px;
+    width: max-content;
     font-size: 14px;
 }
 .language_dropdown_menu .dropdown-item {
@@ -325,7 +328,12 @@ a:focus-visible {
     transform: translateX(-50%);
     width: 28px;
     height: 26px;
-    background: url("/public/img/crown.png") no-repeat center / cover;
+    background: url("../img/crown.png") no-repeat center / cover;
+}
+.flag__icon{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
 
 @media (min-width: 4000px) {
@@ -364,7 +372,7 @@ a:focus-visible {
         padding: 0 10px !important;
     }
     .navbar-nav .nav-link img{
-        max-width: 25px;
+        max-width: 24px;
     }
     .navbar{
         padding-left: 0;
@@ -373,6 +381,21 @@ a:focus-visible {
     .nav__btn{
         padding-left: 15px;
         padding-right: 15px;
+    }
+    .reg__btn {
+        min-width: 100px;
+    }
+    .nav__actions{
+        padding-right: 15px;
+    }
+}
+@media only screen and (max-width: 1300px) and (min-width: 1200px)  {
+    .navbar-brand img {
+        max-width: 140px;
+    }
+    .navbar-nav .nav-link{
+        font-size: 9px;
+        padding: 0 8px !important;
     }
 }
 @media (max-width: 1300px) {
@@ -393,6 +416,15 @@ a:focus-visible {
     }
 }
 
+@media (max-width: 1199px) {
+    .navbar-nav .nav-link{
+        border: none;
+        font-size: 14px;
+    }
+    .navbar-nav{
+        margin-top: 16px;
+    }
+}
 @media (max-width: 1100px) {
     .center-line {
         margin: -9vw 0 -15px;
@@ -553,7 +585,14 @@ a:focus-visible {
     .slots img {
         margin-top: -50px;
     }
-
+    .nav__actions{
+        flex-wrap: wrap !important;
+        padding-left: 15px;
+    }
+    .navbar, .navbar-nav .nav-link{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
     .center-line {
         margin: -10.5vw 0 -15px;
     }

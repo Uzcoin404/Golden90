@@ -2,11 +2,14 @@
 $db = new Database();
 if ($postId) {
     $post = $db->getPost($postId);
+    $post[$langId] = json_decode($post[$langId], true);
+} else {
+    $sections = $db->getSections();
 }
 ?>
 
 <div class="container-fluid pt-4 px-4">
-    <div class="col-sm-12 col-xl-6">
+    <div class="col-12">
         <div class="bg-light rounded h-100 p-4">
             <h5 class="mb-4"><?= !$postId ? "Add new Post" : "Edit Post" ?></h5>
             <form action="/src/components/post-action.php?lang=<?= $langId ?>" method="POST" enctype="multipart/form-data">
@@ -15,18 +18,13 @@ if ($postId) {
                         <label for="formSelect" class="col-sm-2 col-form-label">Section</label>
                         <div class="col-sm-10">
                             <select name="section" class="form-control" id="formSelect">
-                                <option value="nav_link">Navbar links</option>
-                                <option value="sport">Sports(slides bottom)</option>
+                                <?php foreach ($sections as $section) : ?>
+                                    <option value="<?= $section['keyword'] ?>"><?= $section['name'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
                     </div>
                 <?php endif ?>
-                <div class="row mb-4">
-                    <label for="input1" class="col-sm-2 col-form-label">Text</label>
-                    <div class="col-sm-10">
-                        <textarea type="text" class="form-control" id="input1" name="text"><?= !$postId ? '' : $post[$langId] ?></textarea>
-                    </div>
-                </div>
                 <div class="row mb-4">
                     <label for="input2" class="col-sm-2 col-form-label">Link</label>
                     <div class="col-sm-10">
@@ -42,8 +40,113 @@ if ($postId) {
                         <input type="hidden" name="post" value='<?= json_encode($post) ?>'>
                     <?php endif ?>
                 </div>
+                <div class="row mb-4">
+                    <label for="rich-editor" class="form-label">Text (DE)</label>
+                    <textarea name="text" id="rich-editor">
+                        <?= !$postId ? '' : $post[$langId]['html'] ?>
+                    </textarea>
+                </div>
                 <button type="submit" class="btn btn-primary" name="submit"><?= !$postId ? 'Submit' : 'Save' ?></button>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isSmallScreen = window.matchMedia('(max-width: 1024px)').matches;
+
+    tinymce.init({
+        selector: 'textarea#rich-editor',
+        plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+        editimage_cors_hosts: ['picsum.photos'],
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        toolbar_sticky: true,
+        toolbar_sticky_offset: isSmallScreen ? 102 : 108,
+        autosave_ask_before_unload: true,
+        autosave_interval: '30s',
+        autosave_prefix: '{path}{query}-{id}-',
+        autosave_restore_when_empty: false,
+        autosave_retention: '2m',
+        image_advtab: true,
+        link_list: [{
+                title: 'My page 1',
+                value: 'https://www.tiny.cloud'
+            },
+            {
+                title: 'My page 2',
+                value: 'http://www.moxiecode.com'
+            }
+        ],
+        image_list: [{
+                title: 'My page 1',
+                value: 'https://www.tiny.cloud'
+            },
+            {
+                title: 'My page 2',
+                value: 'http://www.moxiecode.com'
+            }
+        ],
+        image_class_list: [{
+                title: 'None',
+                value: ''
+            },
+            {
+                title: 'Some class',
+                value: 'class-name'
+            }
+        ],
+        importcss_append: true,
+        file_picker_callback: (callback, value, meta) => {
+            /* Provide file and text for the link dialog */
+            if (meta.filetype === 'file') {
+                callback('https://www.google.com/logos/google.jpg', {
+                    text: 'My text'
+                });
+            }
+
+            /* Provide image and alt text for the image dialog */
+            if (meta.filetype === 'image') {
+                callback('https://www.google.com/logos/google.jpg', {
+                    alt: 'My alt text'
+                });
+            }
+
+            /* Provide alternative source and posted for the media dialog */
+            if (meta.filetype === 'media') {
+                callback('movie.mp4', {
+                    source2: 'alt.ogg',
+                    poster: 'https://www.google.com/logos/google.jpg'
+                });
+            }
+        },
+        templates: [{
+                title: 'New Table',
+                description: 'creates a new table',
+                content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+            },
+            {
+                title: 'Starting my story',
+                description: 'A cure for writers block',
+                content: 'Once upon a time...'
+            },
+            {
+                title: 'New list with dates',
+                description: 'New List with dates',
+                content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+            }
+        ],
+        template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+        template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+        height: 600,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        noneditable_class: 'mceNonEditable',
+        toolbar_mode: 'sliding',
+        contextmenu: 'link image table',
+        // skin: useDarkMode ? 'oxide-dark' : 'oxide',
+        // content_css: useDarkMode ? 'dark' : 'default',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+    });
+</script>

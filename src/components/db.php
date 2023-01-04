@@ -20,7 +20,7 @@ class Database
     public function getUser($email, $password = null)
     {
         $email = mysqli_real_escape_string($this->connect(), htmlspecialchars($email));
-        
+
         if (!$password) {
             $password = mysqli_real_escape_string($this->connect(), htmlspecialchars($password));
             $query = mysqli_query($this->connect(), "SELECT * FROM `users` WHERE `email`='$email' LIMIT 1");
@@ -57,7 +57,7 @@ class Database
         $name = mysqli_real_escape_string($this->connect(), $name);
         $pic = mysqli_real_escape_string($this->connect(), $pic);
         $pic_mob = mysqli_real_escape_string($this->connect(), $pic_mob);
-        
+
         $rows = mysqli_query($this->connect(), "SELECT COUNT(*) FROM slides");
         $rowCount = mysqli_fetch_assoc($rows)['COUNT(*)'] + 1;
 
@@ -110,45 +110,50 @@ class Database
         }
         return null;
     }
-    public function getPosts($lang, $indexed)
+    public function getPosts($lang)
     {
-        $query = mysqli_query($this->connect(), "SELECT id,keyword,section,link,icon,$lang FROM posts");
+        $query = mysqli_query($this->connect(), "SELECT keyword,section,link,$lang FROM posts");
         if ($query) {
             $result = [];
-            $nav_link = [];
-            $sport = [];
-            if ($indexed) {
-                while ($posts = mysqli_fetch_assoc($query)) {
-                    if ($posts['section'] == 'nav_link') {
-                        $nav_link[] = $posts;
-                    } else if ($posts['section'] == 'sport') {
-                        $sport[] = $posts;
-                    } else {
-                        $result[] = $posts;
-                    }
+            while ($post = mysqli_fetch_assoc($query)) {
+                $html = json_decode($post[$lang], true);
+                $arr = [
+                    'html' => $html['html'] ?? null,
+                    'icon' => $html['icon'] ?? null,
+                    'link' => $post['link'],
+                ];
+                if (!empty($post['section'])) {
+                    $result[$post['section']][] = $arr;
+                } else {
+                    $result[$post['keyword']] = $arr;
                 }
-                $result['nav_link'] = $nav_link;
-                $result['sport'] = $sport;
-                return $result;
-            } else {
-                while ($posts = mysqli_fetch_assoc($query)) {
-                    $arr = [
-                        'text' => $posts[$lang],
-                        'link' => $posts['link'],
-                        'icon' => $posts['icon']
-                    ];
-                    if ($posts['section'] == 'nav_link') {
-                        $nav_link[] = $arr;
-                    } else if ($posts['section'] == 'sport') {
-                        $sport[] = $arr;
-                    } else {
-                        $result[$posts['keyword']] = $arr;
-                    }
-                }
-                $result['nav_link'] = $nav_link;
-                $result['sport'] = $sport;
-                return $result;
             }
+            return $result;
+        }
+        return null;
+    }
+    public function getSection($name, $lang)
+    {
+        $query = mysqli_query($this->connect(), "SELECT id,link,$lang FROM posts WHERE section='$name'");
+        if ($query) {
+            $result = [];
+            while ($posts = mysqli_fetch_assoc($query)) {
+                $posts[$lang] = json_decode($posts[$lang], true);
+                $result[] = $posts;
+            }
+            return $result;
+        }
+        return null;
+    }
+    public function getSections()
+    {
+        $query = mysqli_query($this->connect(), "SELECT * FROM sections");
+        if ($query) {
+            $result = [];
+            while ($posts = mysqli_fetch_assoc($query)) {
+                $result[] = $posts;
+            }
+            return $result;
         }
         return null;
     }
@@ -167,7 +172,9 @@ class Database
         $link = mysqli_real_escape_string($this->connect(), $link);
         $icon = mysqli_real_escape_string($this->connect(), $icon);
 
-        $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$text', link='$link', icon='$icon' WHERE id=$id");
+        $html = ['html' => $text, 'icon' => $icon];
+        $html = json_encode($html);
+        $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=$id");
         if ($query) {
             return true;
         }
@@ -187,9 +194,10 @@ class Database
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
         $icon = mysqli_real_escape_string($this->connect(), $icon);
-        
-        $keyword = uniqid();
-        $query = mysqli_query($this->connect(), "INSERT INTO posts(keyword,section,link,icon,$lang) VALUES ('$keyword', '$section', '$link', '$icon', '$text')");
+
+        $html = ['html' => $text, 'icon' => $icon];
+        $html = json_encode($html);
+        $query = mysqli_query($this->connect(), "INSERT INTO posts(section,link,$lang) VALUES ('$section', '$link', '$html')");
         if ($query) {
             return true;
         }
@@ -213,7 +221,7 @@ class Database
         $name = mysqli_real_escape_string($this->connect(), $name);
         $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
         $icon = mysqli_real_escape_string($this->connect(), $icon);
-        
+
         if ($oldLang) {
             $query2 = mysqli_query($this->connect(), "ALTER TABLE posts CHANGE $oldLang $keyword TEXT NOT NULL");
             if (!$query2) {

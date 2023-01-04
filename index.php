@@ -22,6 +22,7 @@ $user = $db->getUser($_COOKIE['email']);
 require __DIR__ . '/vendor/autoload.php';
 require('src/components/header.php');
 include_once('src/components/spinner.php');
+
 ?>
 
 <body>
@@ -33,7 +34,7 @@ include_once('src/components/spinner.php');
             <?php
             require('src/components/nav.php');
 
-            require('route.php');
+            require('routes.php');
             ?>
         </div>
     </div>
