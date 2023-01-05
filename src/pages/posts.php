@@ -9,7 +9,17 @@ $posts = $db->getSection($sectionId ?? '', $langId);
 <div class="col-12">
   <div class="bg-light rounded h-100 p-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
-      <h5>Posts <?= strtoupper($langId); ?></h5>
+      <div class="d-flex align-items-center">
+        <h5 class="mb-0 me-4">Posts</h5>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Turkish
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">English</a></li>
+          </ul>
+        </div>
+      </div>
       <a href="/admin/posts/<?= $langId ?>/create" class="btn btn-primary">Add Post</a>
     </div>
     <div class="table-responsive">

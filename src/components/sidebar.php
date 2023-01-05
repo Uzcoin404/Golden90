@@ -1,6 +1,7 @@
 <?php
 $db = new Database();
 $languages = $db->getLanguages();
+$sections = $db->getSections();
 ?>
 
 <div class="sidebar pe-4 pb-3">
@@ -26,9 +27,19 @@ $languages = $db->getLanguages();
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Posts</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <?php foreach ($languages as $i => $language) : ?>
-                        <a href="/admin/sections/<?= $language['keyword'] ?>" class="dropdown-item <?= $language['keyword'] == $langId ? 'active' : '' ?>">
+                        <a href="/admin/sections/<?= $language['keyword'] ?>" class="dropdown-item">
                             <img src="<?= $language['icon'] ?>" alt="" class="flag__icon">
                             <?= $language['name'] ?>
+                        </a>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Sections</a>
+                <div class="dropdown-menu bg-transparent border-0">
+                    <?php foreach ($sections as $i => $section) : ?>
+                        <a href="/admin/items/<?= $section['keyword'] ?>/tr" class="dropdown-item">
+                            <?= $section['name'] ?>
                         </a>
                     <?php endforeach ?>
                 </div>
