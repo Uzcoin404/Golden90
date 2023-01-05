@@ -4,7 +4,7 @@ require('./vendor/pecee/simple-router/helpers.php');
 
 Router::group(['prefix' => '/admin'], function () {
     Router::get('/', function () {
-        include_once('src/old.index.html');
+        include_once('src/main.php');
     });
     Router::get('/slides', function () {
         include_once('src/pages/slides.php');

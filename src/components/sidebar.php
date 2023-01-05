@@ -1,5 +1,6 @@
 <?php
 $db = new Database();
+$user = $db->getUser($_COOKIE['email']);
 $languages = $db->getLanguages();
 $sections = $db->getSections();
 ?>
