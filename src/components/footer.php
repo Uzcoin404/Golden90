@@ -8,4 +8,4 @@
 <script src="/src/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- Template Javascript -->
-<!-- <script src="/src/js/main.js?v=<?= time() ?>"></script> -->
+<script src="/src/js/main.js?v=<?= time() ?>"></script>

@@ -21,12 +21,24 @@ include_once('src/components/spinner.php');
           <div class="d-flex align-items-center justify-content-between mb-4">
             <div class="d-flex align-items-center">
               <h5 class="mb-0 me-4">Posts</h5>
-              <div class="dropdown">
+              <div class="dropdown me-3">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Turkish
+                  Language
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">English</a></li>
+                  <?php foreach ($languages as $language) : ?>
+                    <li><a class="dropdown-item <?= $language['keyword'] != $langId ? '' : 'active' ?>" href="<?= $language['keyword'] ?>"><?= $language['name'] ?></a></li>
+                  <?php endforeach ?>
+                </ul>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Section
+                </button>
+                <ul class="dropdown-menu">
+                  <?php foreach ($sections as $section) : ?>
+                    <li><a class="dropdown-item <?= $section['keyword'] != $sectionId ? '' : 'active' ?>" href="/admin/items/<?= $section['keyword'] . "/$langId" ?>"><?= $section['name'] ?></a></li>
+                  <?php endforeach ?>
                 </ul>
               </div>
             </div>
@@ -39,7 +51,7 @@ include_once('src/components/spinner.php');
                   <th scope="col">#</th>
                   <th scope="col">Text</th>
                   <th scope="col">link</th>
-                  <th scope="col">icon</th>
+                  <th scope="col">icon(s)</th>
                   <th scope="col">Tools</th>
                 </tr>
               </thead>
@@ -47,10 +59,13 @@ include_once('src/components/spinner.php');
                 <?php foreach ($posts as $i => $post) : ?>
                   <tr>
                     <th scope="row"><?= $i + 1 ?></th>
-                    <td><?= $post[$langId]['html'] ?></td>
+                    <td><?= $post[$langId]['html'] ?? null ?></td>
                     <td><?= $post['link'] ?></td>
                     <td>
-                      <img src="<?= $post[$langId]['icon'] ?>" alt="" class="table_image">
+                      <img src="<?= $post[$langId]['icon'] ?? null ?>" alt="" class="table_image">
+                      <?php if (!empty($post[$langId]['icon2'])) : ?>
+                        <img src="<?= $post[$langId]['icon'] ?? null ?>" alt="" class="table_image">
+                      <?php endif ?>
                     </td>
                     <td>
                       <a href="/admin/posts/<?= "$langId/edit/" . $post['id'] ?>" type="button" class="btn btn-square btn-success me-2">
@@ -67,7 +82,7 @@ include_once('src/components/spinner.php');
           </div>
         </div>
       </div>
-      
+
     </div>
   </div>
 

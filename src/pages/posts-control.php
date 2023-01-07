@@ -6,6 +6,7 @@ if ($postId) {
 } else {
     $sections = $db->getSections();
 }
+
 require('src/components/header.php');
 include_once('src/components/spinner.php');
 ?>
@@ -22,12 +23,12 @@ include_once('src/components/spinner.php');
                 <div class="col-12">
                     <div class="bg-light rounded h-100 p-4">
                         <h5 class="mb-4"><?= !$postId ? "Add new Post" : "Edit Post" ?></h5>
-                        <form action="/src/components/post-action.php?lang=<?= $langId ?>" method="POST" enctype="multipart/form-data">
+                        <form action="/src/components/post-action.php?lang=<?= $langId ?><?= $postId ? "&sec=" . $post['section'] : '' ?>" method="POST" enctype="multipart/form-data">
                             <?php if (!$postId) : ?>
                                 <div class="row mb-4">
-                                    <label for="formSelect" class="col-sm-2 col-form-label">Section</label>
+                                    <label for="sectionSelect" class="col-sm-2 col-form-label">Section</label>
                                     <div class="col-sm-10">
-                                        <select name="section" class="form-control" id="formSelect">
+                                        <select name="section" class="form-control" id="sectionSelect">
                                             <?php foreach ($sections as $section) : ?>
                                                 <option value="<?= $section['keyword'] ?>"><?= $section['name'] ?></option>
                                             <?php endforeach ?>
@@ -50,11 +51,17 @@ include_once('src/components/spinner.php');
                                     <input type="hidden" name="post" value='<?= json_encode($post) ?>'>
                                 <?php endif ?>
                             </div>
+                            <div class="row mb-4 <?= !empty($post[$langId]['icon2']) ? '' : 'd-none' ?>" id="secondPic">
+                                <label for="formFile2" class="col-sm-3 col-form-label">Upload second icon</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="file" id="formFile2" name="icon2" accept="image/png, image/gif, image/jpeg">
+                                </div>
+                            </div>
                             <div class="row mb-4">
                                 <label for="rich-editor" class="form-label">Text (DE)</label>
                                 <textarea name="text" id="rich-editor">
-                        <?= !$postId ? '' : $post[$langId]['html'] ?>
-                    </textarea>
+                                    <?= !$postId ? '' : $post[$langId]['html'] ?>
+                                </textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" name="submit"><?= !$postId ? 'Submit' : 'Save' ?></button>
                         </form>
@@ -62,6 +69,19 @@ include_once('src/components/spinner.php');
                 </div>
             </div>
 
+            <script>
+                const sectionSelect = document.querySelector('#sectionSelect');
+                sectionSelect.addEventListener('change', slideToggle);
+
+                function slideToggle() {
+                    if (sectionSelect.value === 'slides') {
+                        document.querySelector('#secondPic').classList.remove('d-none');
+                    } else {
+                        document.querySelector('#secondPic').classList.add('d-none');
+                    }
+                }
+                slideToggle();
+            </script>
             <script>
                 const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 const isSmallScreen = window.matchMedia('(max-width: 1024px)').matches;

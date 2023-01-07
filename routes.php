@@ -6,16 +6,6 @@ Router::group(['prefix' => '/admin'], function () {
     Router::get('/', function () {
         include_once('src/main.php');
     });
-    Router::get('/slides', function () {
-        include_once('src/pages/slides.php');
-    });
-    Router::get('/slides/create', function () {
-        $slideId = null;
-        include_once('src/pages/slides-control.php');
-    });
-    Router::get('/slides/edit/{id}', function ($slideId) {
-        include_once('src/pages/slides-control.php');
-    });
     Router::get('/sections/{lang}', function ($langId) {
         include_once('src/pages/sections.php');
     });

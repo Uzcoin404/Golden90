@@ -9,3 +9,4 @@ if ($id) {
     $db->deletePost($id);
 }
 header("Location: /admin/items/$sectionId/$langId");
+exit();

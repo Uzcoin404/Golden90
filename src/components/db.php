@@ -120,6 +120,7 @@ class Database
                 $arr = [
                     'html' => $html['html'] ?? null,
                     'icon' => $html['icon'] ?? null,
+                    'icon2' => $html['icon2'] ?? null,
                     'link' => $post['link'],
                 ];
                 if (!empty($post['section'])) {
@@ -165,16 +166,21 @@ class Database
         }
         return null;
     }
-    public function editPost($id, $lang, $text, $link, $icon)
+    public function editPost($post, $lang, $text, $link, $icon, $icon2)
     {
         $lang = mysqli_real_escape_string($this->connect(), $lang);
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
         $icon = mysqli_real_escape_string($this->connect(), $icon);
 
-        $html = ['html' => $text, 'icon' => $icon];
+        if ($icon2) {
+            $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
+            $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2];
+        } else {
+            $html = ['html' => $text, 'icon' => $post[$lang]['icon']];
+        }
         $html = json_encode($html);
-        $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=$id");
+        $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=" . $post['id']);
         if ($query) {
             return true;
         }
@@ -188,14 +194,19 @@ class Database
         }
         return null;
     }
-    public function setPost($section, $lang, $text, $link, $icon)
+    public function setPost($section, $lang, $text, $link, $icon, $icon2 = null)
     {
         $lang = mysqli_real_escape_string($this->connect(), $lang);
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
         $icon = mysqli_real_escape_string($this->connect(), $icon);
 
-        $html = ['html' => $text, 'icon' => $icon];
+        if ($icon2 && $icon2 !== '') {
+            $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
+            $html = ['html' => $text, 'icon' => $icon, 'icon2' => $icon2];
+        } else {
+            $html = ['html' => $text, 'icon' => $icon];
+        }
         $html = json_encode($html);
         $query = mysqli_query($this->connect(), "INSERT INTO posts(section,link,$lang) VALUES ('$section', '$link', '$html')");
         if ($query) {

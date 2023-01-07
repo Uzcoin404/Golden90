@@ -7,3 +7,4 @@ if ($keyword) {
     $db->deleteLanguage($keyword);
 }
 header("Location: /admin/languages");
+exit();

@@ -5,7 +5,7 @@ $db = new Database();
 $lang = $_GET['lang'] ?? 'tr';
 
 $posts = $db->getPosts($lang);
-$slides = $db->getSlides();
+// $slides = $db->getSlides();
 $languages = $db->getLanguages();
 // echo "<br>";
 // print_r($posts);
@@ -77,16 +77,16 @@ $languages = $db->getLanguages();
       </nav>
     </div>
     <div class="section mainslider">
-      <?php foreach ($slides as $i => $slide) : ?>
+      <?php foreach ($posts['slides'] as $i => $slide) : ?>
         <div>
-          <div class="slide" style="background-image: url('<?= $slide['picture'] ?>');" data-index="<?= $i ?>"></div>
+          <div class="slide" style="background-image: url('<?= $slide['icon'] ?>');" data-index="<?= $i ?>"></div>
         </div>
       <?php endforeach ?>
     </div>
     <div class="section mob-mainslider">
-      <?php foreach ($slides as $i => $slide) : ?>
+      <?php foreach ($posts['slides'] as $i => $slide) : ?>
         <div>
-          <div class="slide" style="background-image: url('<?= $slide['picture_mobile'] ?>');" data-index="<?= $i ?>"></div>
+          <div class="slide" style="background-image: url('<?= $slide['icon2'] ?>');" data-index="<?= $i ?>"></div>
         </div>
       <?php endforeach ?>
     </div>
