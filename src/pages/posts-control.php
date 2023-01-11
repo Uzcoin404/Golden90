@@ -51,7 +51,7 @@ include_once('src/components/spinner.php');
                                     <input type="hidden" name="post" value='<?= json_encode($post) ?>'>
                                 <?php endif ?>
                             </div>
-                            <div class="row mb-4 <?= !empty($post[$langId]['icon2']) ? '' : 'd-none' ?>" id="secondPic">
+                            <div class="row mb-4 <?= $post['section'] == 'slides' ? '' : 'd-none' ?>" id="secondPic">
                                 <label for="formFile2" class="col-sm-3 col-form-label">Upload second icon</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="file" id="formFile2" name="icon2" accept="image/png, image/gif, image/jpeg">
@@ -71,16 +71,18 @@ include_once('src/components/spinner.php');
 
             <script>
                 const sectionSelect = document.querySelector('#sectionSelect');
-                sectionSelect.addEventListener('change', slideToggle);
+                if (sectionSelect) {
+                    sectionSelect.addEventListener('change', slideToggle);
 
-                function slideToggle() {
-                    if (sectionSelect.value === 'slides') {
-                        document.querySelector('#secondPic').classList.remove('d-none');
-                    } else {
-                        document.querySelector('#secondPic').classList.add('d-none');
+                    function slideToggle() {
+                        if (sectionSelect.value === 'slides') {
+                            document.querySelector('#secondPic').classList.remove('d-none');
+                        } else {
+                            document.querySelector('#secondPic').classList.add('d-none');
+                        }
                     }
+                    slideToggle();
                 }
-                slideToggle();
             </script>
             <script>
                 const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;

@@ -16,7 +16,6 @@ class Database
         }
         return $mysqli;
     }
-
     public function getUser($email, $password = null)
     {
         $email = mysqli_real_escape_string($this->connect(), htmlspecialchars($email));
@@ -87,15 +86,14 @@ class Database
         }
         return null;
     }
-    public function slideUp($id, $pos, $direction)
+    public function postPosititon($id, $pos, $direction, $section)
     {
-        // $time = time();
         if ($direction == 'up') {
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos WHERE position=$pos-1");
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos-1 WHERE id=$id");
+            mysqli_query($this->connect(), "UPDATE posts SET position=$pos WHERE position=$pos-1 AND section='$section'");
+            mysqli_query($this->connect(), "UPDATE posts SET position=$pos-1 WHERE id=$id AND section='$section'");
         } else {
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos WHERE position=$pos+1");
-            $query = mysqli_query($this->connect(), "UPDATE slides SET position=$pos+1 WHERE id=$id");
+            mysqli_query($this->connect(), "UPDATE posts SET position=$pos WHERE position=$pos+1 AND section='$section'");
+            mysqli_query($this->connect(), "UPDATE posts SET position=$pos+1 WHERE id=$id AND section='$section'");
         }
     }
     public function getLanguages()
@@ -112,7 +110,7 @@ class Database
     }
     public function getPosts($lang)
     {
-        $query = mysqli_query($this->connect(), "SELECT keyword,section,link,$lang FROM posts");
+        $query = mysqli_query($this->connect(), "SELECT keyword,section,link,$lang FROM posts ORDER BY position");
         if ($query) {
             $result = [];
             while ($post = mysqli_fetch_assoc($query)) {
@@ -135,7 +133,7 @@ class Database
     }
     public function getSection($name, $lang)
     {
-        $query = mysqli_query($this->connect(), "SELECT id,link,$lang FROM posts WHERE section='$name'");
+        $query = mysqli_query($this->connect(), "SELECT id,link,position,$lang FROM posts WHERE section='$name' ORDER BY position");
         if ($query) {
             $result = [];
             while ($posts = mysqli_fetch_assoc($query)) {
@@ -171,14 +169,9 @@ class Database
         $lang = mysqli_real_escape_string($this->connect(), $lang);
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
-        $icon = mysqli_real_escape_string($this->connect(), $icon);
 
-        if ($icon2) {
-            $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
-            $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2];
-        } else {
-            $html = ['html' => $text, 'icon' => $post[$lang]['icon']];
-        }
+        $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2 ?? $post[$lang]['icon2']];
+        var_dump($icon2, $html);
         $html = json_encode($html);
         $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=" . $post['id']);
         if ($query) {
@@ -200,15 +193,15 @@ class Database
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
         $icon = mysqli_real_escape_string($this->connect(), $icon);
+        $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
 
-        if ($icon2 && $icon2 !== '') {
-            $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
-            $html = ['html' => $text, 'icon' => $icon, 'icon2' => $icon2];
-        } else {
-            $html = ['html' => $text, 'icon' => $icon];
-        }
+        $rows = mysqli_query($this->connect(), "SELECT COUNT(*) FROM posts WHERE section='$section'");
+        $rowCount = mysqli_fetch_assoc($rows)['COUNT(*)'] + 1;
+
+        $html = ['html' => $text, 'icon' => $icon, 'icon2' => $icon2];
         $html = json_encode($html);
-        $query = mysqli_query($this->connect(), "INSERT INTO posts(section,link,$lang) VALUES ('$section', '$link', '$html')");
+        var_dump("INSERT INTO posts(section,position,link,$lang) VALUES ('$section', $rowCount '$link', '$html')");
+        $query = mysqli_query($this->connect(), "INSERT INTO posts(section,position,link,$lang) VALUES ('$section', $rowCount, '$link', '$html')");
         if ($query) {
             return true;
         }

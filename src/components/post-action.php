@@ -29,15 +29,15 @@ if (isset($_POST["submit"]) && $langId) {
     $firstPic = $target_file != '';
     $secondPic = $target_file2 != '';
     if ($post) {
-        if ($target_file != '' && $secondPic) {
-
+        if ($firstPic && $secondPic) {
             move_uploaded_file($tmpName, $newFilePath);
             move_uploaded_file($tmpName2, $newFilePath2);
-        } else if ($target_file != '') {
+        } else if ($firstPic) {
             move_uploaded_file($tmpName, $newFilePath);
         } else {
             move_uploaded_file($tmpName2, $newFilePath2);
         }
+        var_dump($_FILES["icon2"]["name"]);
         $db->editPost($post, $langId, $text, $link, $firstPic ? $iconUrl : null, $secondPic ? $iconUrl2 : null);
     } else {
         $check = getimagesize($tmpName);
@@ -54,5 +54,5 @@ if ($secId) {
     header("Location: /admin/items/$secId/$langId");
     exit();
 }
-header("Location: /admin/items/$langId");
+header("Location: /admin/sections/$langId");
 exit();

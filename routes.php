@@ -17,6 +17,7 @@ Router::group(['prefix' => '/admin'], function () {
         include_once('src/pages/posts.php');
     });
     Router::get('/items/{lang}', function ($langId) {
+        $sectionId = null;
         include_once('src/pages/posts.php');
     });
     Router::get('/posts/{lang}/edit/{id}', function ($langId, $postId) {

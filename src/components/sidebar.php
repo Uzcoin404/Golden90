@@ -37,8 +37,11 @@ $sections = $db->getSections();
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Sections</a>
                 <div class="dropdown-menu bg-transparent border-0">
+                    <a href="/admin/items/<?= isset($langId) ? $langId : 'tr' ?>" class="dropdown-item">
+                        No section
+                    </a>
                     <?php foreach ($sections as $i => $section) : ?>
-                        <a href="/admin/items/<?= $section['keyword'] ?>/tr" class="dropdown-item">
+                        <a href="/admin/items/<?= $section['keyword'] ?>/<?= isset($langId) ? $langId : 'tr' ?>" class="dropdown-item">
                             <?= $section['name'] ?>
                         </a>
                     <?php endforeach ?>

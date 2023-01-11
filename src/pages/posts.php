@@ -36,6 +36,7 @@ include_once('src/components/spinner.php');
                   Section
                 </button>
                 <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/admin/items/<?= $langId ?>">No section</a></li>
                   <?php foreach ($sections as $section) : ?>
                     <li><a class="dropdown-item <?= $section['keyword'] != $sectionId ? '' : 'active' ?>" href="/admin/items/<?= $section['keyword'] . "/$langId" ?>"><?= $section['name'] ?></a></li>
                   <?php endforeach ?>
@@ -51,6 +52,9 @@ include_once('src/components/spinner.php');
                   <th scope="col">#</th>
                   <th scope="col">Text</th>
                   <th scope="col">link</th>
+                  <?php if (isset($sectionId)) : ?>
+                    <th scope="col">position</th>
+                  <?php endif ?>
                   <th scope="col">icon(s)</th>
                   <th scope="col">Tools</th>
                 </tr>
@@ -58,13 +62,23 @@ include_once('src/components/spinner.php');
               <tbody>
                 <?php foreach ($posts as $i => $post) : ?>
                   <tr>
-                    <th scope="row"><?= $i + 1 ?></th>
+                    <th scope="row"><?= $sectionId ? $post['position'] : $i + 1 ?></th>
                     <td><?= $post[$langId]['html'] ?? null ?></td>
                     <td><?= $post['link'] ?></td>
+                    <?php if ($sectionId) : ?>
+                      <td>
+                        <?php if ($i != 0) : ?>
+                          <a href="/src/components/post-position.php?d=up&p=<?= $post['position'] . "&id=" . $post['id'] . "&lang=$langId&sec=$sectionId" ?>" type="button" class="btn btn-square btn-outline-secondary"><i class="fa-solid fa-arrow-up"></i></a>
+                        <?php endif ?>
+                        <?php if ($i != count($posts) - 1) : ?>
+                          <a href="/src/components/post-position.php?d=down&p=<?= $post['position'] . "&id=" . $post['id'] . "&lang=$langId&sec=$sectionId" ?>" type="button" class="btn btn-square btn-outline-secondary"><i class="fa-solid fa-arrow-down"></i></a>
+                        <?php endif ?>
+                      </td>
+                    <?php endif ?>
                     <td>
                       <img src="<?= $post[$langId]['icon'] ?? null ?>" alt="" class="table_image">
                       <?php if (!empty($post[$langId]['icon2'])) : ?>
-                        <img src="<?= $post[$langId]['icon'] ?? null ?>" alt="" class="table_image">
+                        <img src="<?= $post[$langId]['icon2'] ?? null ?>" alt="" class="table_image">
                       <?php endif ?>
                     </td>
                     <td>
