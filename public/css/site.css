@@ -5,7 +5,7 @@ body {
     font-weight: 400;
     font-size: 12px;
 }
-p{
+p {
     margin-bottom: 0;
 }
 img {
@@ -27,7 +27,7 @@ a:focus-visible {
     top: -5px;
 }
 
-.navbar{
+.navbar {
     padding-top: 16px;
 }
 .navbar-nav {
@@ -330,7 +330,7 @@ a:focus-visible {
     height: 26px;
     background: url("../img/crown.png") no-repeat center / cover;
 }
-.flag__icon{
+.flag__icon {
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -360,40 +360,46 @@ a:focus-visible {
         margin: -7.5vw 0 -15px;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 1200px)  {
-    .navbar-nav{
+@media only screen and (max-width: 1700px) and (min-width: 1200px) {
+    .navbar-nav {
         gap: 10px;
     }
     .navbar-brand img {
         max-width: 150px;
     }
-    .navbar-nav .nav-link{
+    .navbar-nav .nav-link img {
+        max-width: 24px;
+    }
+    .nav__btn {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+@media only screen and (max-width: 1500px) and (min-width: 1200px) {
+    .navbar-nav .nav-link {
         font-size: 10px;
         padding: 0 10px !important;
     }
-    .navbar-nav .nav-link img{
-        max-width: 24px;
-    }
-    .navbar{
+    .navbar {
         padding-left: 0;
         padding-right: 0;
     }
-    .nav__btn{
+    .nav__btn {
         padding-left: 15px;
         padding-right: 15px;
     }
     .reg__btn {
         min-width: 100px;
     }
-    .nav__actions{
+    .nav__actions {
         padding-right: 15px;
     }
 }
-@media only screen and (max-width: 1300px) and (min-width: 1200px)  {
+@media only screen and (max-width: 1300px) and (min-width: 1200px) {
     .navbar-brand img {
         max-width: 140px;
     }
-    .navbar-nav .nav-link{
+    .navbar-nav .nav-link {
         font-size: 9px;
         padding: 0 8px !important;
     }
@@ -417,11 +423,11 @@ a:focus-visible {
 }
 
 @media (max-width: 1199px) {
-    .navbar-nav .nav-link{
+    .navbar-nav .nav-link {
         border: none;
         font-size: 14px;
     }
-    .navbar-nav{
+    .navbar-nav {
         margin-top: 16px;
     }
 }
@@ -441,8 +447,10 @@ a:focus-visible {
 }
 
 @media (max-width: 991px) {
-    .section.slider-footer .container-fluid {
-        padding: 0;
+    .section.slider-footer .container-fluid,
+    .roundcards .container-fluid,
+    .section.slots .container-fluid {
+        padding: 0 !important;
     }
 
     .mob-mainslider {
@@ -585,11 +593,12 @@ a:focus-visible {
     .slots img {
         margin-top: -50px;
     }
-    .nav__actions{
+    .nav__actions {
         flex-wrap: wrap !important;
         padding-left: 15px;
     }
-    .navbar, .navbar-nav .nav-link{
+    .navbar,
+    .navbar-nav .nav-link {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }

@@ -110,11 +110,11 @@ $languages = $db->getLanguages();
     </div>
     <div class="section slots">
       <div class="container-fluid">
-        <div class="row">
+        <div class="slots-slider">
           <?php foreach ($posts['cards_1'] as $card) : ?>
-            <div class="col-md-3 col-sm-6">
-              <a href="<?= $card['link'] ?>"><img src="<?= $card['icon'] ?>" /></a>
-            </div>
+            <a href="<?= $card['link'] ?>" class="mb-4">
+              <img src="<?= $card['icon'] ?>" />
+            </a>
           <?php endforeach ?>
         </div>
       </div>
@@ -135,11 +135,9 @@ $languages = $db->getLanguages();
     </div>
     <div class="section roundcards pt-5">
       <div class="container-fluid pb-5">
-        <div class="row">
+        <div class="roundcards-slider">
           <?php foreach ($posts['cards_2'] as $card) : ?>
-            <div class="col w-20 col-sm-6 col-6  text-center">
-              <a href="<?= $card['link'] ?>"><img src="<?= $card['icon'] ?>" /></a>
-            </div>
+            <a href="<?= $card['link'] ?>"><img src="<?= $card['icon'] ?>" /></a>
           <?php endforeach ?>
         </div>
       </div>
@@ -150,6 +148,9 @@ $languages = $db->getLanguages();
     <div class="section footer py-5">
       <div class="container-fluid">
         <div class="row">
+          <?php foreach ($posts['footer'] as $footer_item) : ?>
+            <?= $footer_item['html'] ?>
+          <?php endforeach ?>
           <div class="col-xl-2 col-md-2 col-sm-4 col-6">
             <strong>Hakkında</strong>
             <uL class="no-style">
@@ -231,7 +232,7 @@ $languages = $db->getLanguages();
   <script src="/public/js/jquery.slim.min.js"></script>
   <script src="/public/js/bootstrap.bundle.min.js"></script>
   <script src="/public/plugins/slick/slick.js"></script>
-  <script src="/public/js/script.js"></script>
+  <script src="/public/js/script.js?time=<?= time() ?>"></script>
 </body>
 
 </html>

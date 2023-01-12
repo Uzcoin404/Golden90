@@ -171,8 +171,9 @@ class Database
         $link = mysqli_real_escape_string($this->connect(), $link);
 
         $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2 ?? $post[$lang]['icon2']];
-        var_dump($icon2, $html);
+        var_dump($html);
         $html = json_encode($html);
+        var_dump($html);
         $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=" . $post['id']);
         if ($query) {
             return true;
@@ -192,15 +193,12 @@ class Database
         $lang = mysqli_real_escape_string($this->connect(), $lang);
         $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
-        $icon = mysqli_real_escape_string($this->connect(), $icon);
-        $icon2 = mysqli_real_escape_string($this->connect(), $icon2);
 
         $rows = mysqli_query($this->connect(), "SELECT COUNT(*) FROM posts WHERE section='$section'");
         $rowCount = mysqli_fetch_assoc($rows)['COUNT(*)'] + 1;
 
         $html = ['html' => $text, 'icon' => $icon, 'icon2' => $icon2];
         $html = json_encode($html);
-        var_dump("INSERT INTO posts(section,position,link,$lang) VALUES ('$section', $rowCount '$link', '$html')");
         $query = mysqli_query($this->connect(), "INSERT INTO posts(section,position,link,$lang) VALUES ('$section', $rowCount, '$link', '$html')");
         if ($query) {
             return true;

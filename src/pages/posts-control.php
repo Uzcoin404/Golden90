@@ -23,7 +23,7 @@ include_once('src/components/spinner.php');
                 <div class="col-12">
                     <div class="bg-light rounded h-100 p-4">
                         <h5 class="mb-4"><?= !$postId ? "Add new Post" : "Edit Post" ?></h5>
-                        <form action="/src/components/post-action.php?lang=<?= $langId ?><?= $postId ? "&sec=" . $post['section'] : '' ?>" method="POST" enctype="multipart/form-data">
+                        <form action="/src/components/post-action.php?lang=<?= $langId ?><?= $postId ? "&sec=" . $post['section'] : '' ?>" method="POST" enctype="multipart/form-data" id="post_form">
                             <?php if (!$postId) : ?>
                                 <div class="row mb-4">
                                     <label for="sectionSelect" class="col-sm-2 col-form-label">Section</label>
@@ -45,7 +45,7 @@ include_once('src/components/spinner.php');
                             <div class="row mb-4">
                                 <label for="formFile" class="col-sm-3 col-form-label">Upload icon</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="file" id="formFile" name="icon" accept="image/png, image/gif, image/jpeg" <?= !$postId ? 'required' : '' ?>>
+                                    <input class="form-control" type="file" id="formFile" name="icon" accept="image/png, image/gif, image/jpeg">
                                 </div>
                                 <?php if (isset($postId)) : ?>
                                     <input type="hidden" name="post" value='<?= json_encode($post) ?>'>
@@ -153,24 +153,6 @@ include_once('src/components/spinner.php');
                             });
                         }
                     },
-                    templates: [{
-                            title: 'New Table',
-                            description: 'creates a new table',
-                            content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
-                        },
-                        {
-                            title: 'Starting my story',
-                            description: 'A cure for writers block',
-                            content: 'Once upon a time...'
-                        },
-                        {
-                            title: 'New list with dates',
-                            description: 'New List with dates',
-                            content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
-                        }
-                    ],
-                    template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
-                    template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
                     height: 600,
                     image_caption: true,
                     quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
@@ -181,6 +163,11 @@ include_once('src/components/spinner.php');
                     // content_css: useDarkMode ? 'dark' : 'default',
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
                 });
+                document.querySelector('#post_form').addEventListener('submit', function(e) {
+                    // e.preventDefault()
+                    let value = [document.querySelector('#rich-editor').value]
+                    console.log(JSON.stringify(value));
+                })
             </script>
         </div>
     </div>
