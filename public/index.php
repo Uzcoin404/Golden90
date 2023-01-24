@@ -103,8 +103,10 @@ $languages = $db->getLanguages();
             <?php endforeach ?>
           </div>
           <div class="center-line"></div>
-          <div class="relation-button"><a href="https://182golden90.com"><img src="/public/img/tum_oyunlar.png" /></a>
-          </div>
+          <a href="<?= $posts['lines_button']['link'] ?>" class="relation-button position-relative">
+            <span><?= $posts['lines_button']['html'] ?></span>
+            <img src="<?= $posts['lines_button']['icon'] ?>" />
+          </a>
         </div>
       </div>
     </div>
@@ -148,9 +150,9 @@ $languages = $db->getLanguages();
     <div class="section footer py-5">
       <div class="container-fluid">
         <div class="row">
-          <?php foreach ($posts['footer'] as $footer_item) : ?>
-            <?= $footer_item['html'] ?>
-          <?php endforeach ?>
+          <!-- <?php foreach ($posts['footer'] as $footer_item) : ?>
+            <?= var_dump($footer_item['html']) ?>
+          <?php endforeach ?> -->
           <div class="col-xl-2 col-md-2 col-sm-4 col-6">
             <strong>Hakkında</strong>
             <uL class="no-style">

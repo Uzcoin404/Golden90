@@ -167,12 +167,12 @@ class Database
     public function editPost($post, $lang, $text, $link, $icon, $icon2)
     {
         $lang = mysqli_real_escape_string($this->connect(), $lang);
-        $text = mysqli_real_escape_string($this->connect(), $text);
+        // $text = mysqli_real_escape_string($this->connect(), $text);
         $link = mysqli_real_escape_string($this->connect(), $link);
 
         $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2 ?? $post[$lang]['icon2']];
         var_dump($html);
-        $html = json_encode($html);
+        $html = json_encode(array_map('utf8_encode', $html));
         var_dump($html);
         $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=" . $post['id']);
         if ($query) {

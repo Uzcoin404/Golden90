@@ -157,14 +157,32 @@ a:focus-visible {
     right: -20px;
 }
 
-.relation-button img {
-    max-width: 100%;
-}
-
 .relation-button {
-    margin-top: 6vw;
-    padding: 0 8vw;
+    height: 60px;
+    margin-top: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    text-decoration: none !important;
+    color: #000 !important;
+    letter-spacing: 0.5em;
+}
+.relation-button span {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+}
+.relation-button img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 100%;
+    z-index: -1;
 }
 
 .section.slots {
@@ -416,10 +434,6 @@ a:focus-visible {
     .section-cards {
         height: 40vw;
     }
-
-    .relation-button {
-        margin-top: 7vw;
-    }
 }
 
 @media (max-width: 1199px) {
@@ -436,11 +450,6 @@ a:focus-visible {
         margin: -9vw 0 -15px;
     }
 
-    .relation-button {
-        margin-top: -20px;
-        position: relative;
-    }
-
     .section-cards {
         height: 55vw;
     }
@@ -452,7 +461,14 @@ a:focus-visible {
     .section.slots .container-fluid {
         padding: 0 !important;
     }
-
+    .relation-button {
+        height: 50px;
+        margin-top: 0px;
+        letter-spacing: 0.3em;
+    }
+    .relation-button img {
+        width: 100%;
+    }
     .mob-mainslider {
         display: block;
     }
@@ -626,7 +642,6 @@ a:focus-visible {
         left: 0;
         width: 100%;
     }
-
     .relation-button img {
         width: 310%;
         max-width: none;
@@ -634,11 +649,9 @@ a:focus-visible {
         top: 0;
         left: -105%;
     }
-
     .section-cards {
         height: 160vw;
     }
-
     .sloter-header img {
         max-width: 50vw;
         margin-top: 13px;
