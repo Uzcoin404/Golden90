@@ -49,9 +49,9 @@ function moveUploadedFile()
         move_uploaded_file($tmpName2, $newFilePath2);
     }
 }
-// if ($secId) {
-//     header("Location: /admin/items/$secId/$langId");
-//     exit();
-// }
-// header("Location: /admin/sections/$langId");
-// exit();
+if ($secId) {
+    header("Location: /admin/items/$secId/$langId");
+    exit();
+}
+header("Location: /admin/sections/$langId");
+exit();

@@ -2,7 +2,8 @@
 $db = new Database();
 if ($postId) {
     $post = $db->getPost($postId);
-    $post[$langId] = json_decode($post[$langId], true);
+    var_dump($post[$langId]);
+    $post[$langId] = json_decode(utf8_decode($post[$langId]), true);
 } else {
     $sections = $db->getSections();
 }
@@ -60,7 +61,7 @@ include_once('src/components/spinner.php');
                             <div class="row mb-4">
                                 <label for="rich-editor" class="form-label">Text (DE)</label>
                                 <textarea name="text" id="rich-editor">
-                                    <?= !$postId ? '' : $post[$langId]['html'] ?>
+                                    <?= $postId && !empty($post[$langId]['html']) ? $post[$langId]['html'] : '' ?>
                                 </textarea>
                             </div>
                             <button type="submit" class="btn btn-primary" name="submit"><?= !$postId ? 'Submit' : 'Save' ?></button>
@@ -166,7 +167,6 @@ include_once('src/components/spinner.php');
                 document.querySelector('#post_form').addEventListener('submit', function(e) {
                     // e.preventDefault()
                     let value = [document.querySelector('#rich-editor').value]
-                    console.log(JSON.stringify(value));
                 })
             </script>
         </div>

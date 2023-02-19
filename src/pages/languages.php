@@ -24,7 +24,7 @@ include_once('src/components/spinner.php');
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">short name</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Icon</th>
                                     <th scope="col">Tools</th>
                                 </tr>
@@ -34,7 +34,7 @@ include_once('src/components/spinner.php');
                                     <tr>
                                         <th scope="row"><?= $i + 1 ?></th>
                                         <td><?= $language['name'] ?></td>
-                                        <td><?= $language['keyword'] ?></td>
+                                        <td><?= $language['status'] ? 'Visible' : 'Hidden' ?></td>
                                         <td>
                                             <img src="<?= '../' . $language['icon'] ?>" alt="" class="flag__icon">
                                         </td>

@@ -171,9 +171,7 @@ class Database
         $link = mysqli_real_escape_string($this->connect(), $link);
 
         $html = ['html' => $text, 'icon' => $icon ?? $post[$lang]['icon'], 'icon2' => $icon2 ?? $post[$lang]['icon2']];
-        var_dump($html);
         $html = json_encode(array_map('utf8_encode', $html));
-        var_dump($html);
         $query = mysqli_query($this->connect(), "UPDATE posts SET $lang='$html', link='$link', icon='$icon' WHERE id=" . $post['id']);
         if ($query) {
             return true;
@@ -205,23 +203,25 @@ class Database
         }
         return null;
     }
-    public function setLanguage($name, $keyword, $icon)
+    public function setLanguage($name, $keyword, $status, $icon)
     {
         $name = mysqli_real_escape_string($this->connect(), $name);
         $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
+        $status = strtolower(mysqli_real_escape_string($this->connect(), $status));
         $icon = mysqli_real_escape_string($this->connect(), $icon);
 
-        $query = mysqli_query($this->connect(), "INSERT INTO languages(keyword, name, icon) VALUES ('$keyword','$name','$icon')");
+        $query = mysqli_query($this->connect(), "INSERT INTO languages(keyword, status, name, icon) VALUES ('$keyword','$status','$name','$icon')");
         $query2 = mysqli_query($this->connect(), "ALTER TABLE posts ADD $keyword TEXT NOT NULL");
         if ($query && $query2) {
             return true;
         }
         return null;
     }
-    public function editLanguage($id, $oldLang, $name, $keyword, $icon)
+    public function editLanguage($id, $oldLang, $name, $keyword, $status, $icon)
     {
         $name = mysqli_real_escape_string($this->connect(), $name);
         $keyword = strtolower(mysqli_real_escape_string($this->connect(), $keyword));
+        $status = strtolower(mysqli_real_escape_string($this->connect(), $status));
         $icon = mysqli_real_escape_string($this->connect(), $icon);
 
         if ($oldLang) {
@@ -230,7 +230,7 @@ class Database
                 return false;
             }
         }
-        mysqli_query($this->connect(), "UPDATE languages SET name='$name', keyword='$keyword', icon='$icon' WHERE id=$id");
+        mysqli_query($this->connect(), "UPDATE languages SET name='$name', keyword='$keyword', status='$status', icon='$icon' WHERE id=$id");
     }
     public function deleteLanguage($keyword)
     {

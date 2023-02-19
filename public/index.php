@@ -19,9 +19,7 @@ $languages = $db->getLanguages();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-  <title>
-    Golden90
-  </title>
+  <title>Golden90</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -59,12 +57,13 @@ $languages = $db->getLanguages();
                 <span><?= $lang ?></span>
               </button>
               <div class="dropdown-menu language_dropdown_menu">
-                <?php foreach ($languages as $i => $language) : ?>
-                  <a href="?lang=<?= $language['keyword'] ?>" class="dropdown-item">
-                    <img src="<?= $language['icon'] ?>" alt="" class="flag__icon">
-                    <?= $language['name'] ?>
-                  </a>
-                <?php endforeach ?>
+                <?php foreach ($languages as $i => $language) : if ($language['status']) : ?>
+                    <a href="?lang=<?= $language['keyword'] ?>" class="dropdown-item">
+                      <img src="<?= $language['icon'] ?>" alt="" class="flag__icon">
+                      <?= $language['name'] ?>
+                    </a>
+                <?php endif;
+                endforeach ?>
               </div>
             </div>
             <a class="btn nav__btn reg__btn text-center" href="<?= $posts['sign_up']['link'] ?>">
@@ -150,8 +149,8 @@ $languages = $db->getLanguages();
     <div class="section footer py-5">
       <div class="container-fluid">
         <div class="row">
-          <!-- <?php foreach ($posts['footer'] as $footer_item) : ?>
-            <?= var_dump($footer_item['html']) ?>
+          <?php foreach ($posts['footer'] as $footer_item) : ?>
+            <?= var_dump($footer_item) ?>
           <?php endforeach ?> -->
           <div class="col-xl-2 col-md-2 col-sm-4 col-6">
             <strong>Hakkında</strong>

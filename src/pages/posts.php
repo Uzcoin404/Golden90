@@ -85,9 +85,11 @@ include_once('src/components/spinner.php');
                       <a href="/admin/posts/<?= "$langId/edit/" . $post['id'] ?>" type="button" class="btn btn-square btn-success me-2">
                         <i class="fa-solid fa-pen"></i>
                       </a>
-                      <a href="/src/components/post-delete.php?id=<?= $post['id'] . "&lang=$langId&sec=$sectionId" ?>" type="button" class="btn btn-square btn-danger">
-                        <i class="fa-solid fa-trash"></i>
-                      </a>
+                      <?php if ($sectionId) : ?>
+                        <a href="/src/components/post-delete.php?id=<?= $post['id'] . "&lang=$langId&sec=$sectionId" ?>" type="button" class="btn btn-square btn-danger">
+                          <i class="fa-solid fa-trash"></i>
+                        </a>
+                      <?php endif ?>
                     </td>
                   </tr>
                 <?php endforeach ?>
