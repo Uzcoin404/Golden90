@@ -2,8 +2,8 @@
 $db = new Database();
 if ($postId) {
     $post = $db->getPost($postId);
-    var_dump($post[$langId]);
     $post[$langId] = json_decode(utf8_decode($post[$langId]), true);
+    var_dump($post[$langId]);
 } else {
     $sections = $db->getSections();
 }
